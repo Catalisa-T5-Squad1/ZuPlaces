@@ -29,7 +29,7 @@ public  UserModel create(UserDto userDto){
 public  UserModel update (UserDto userDto){
         return repository.save(mapper.map(userDto, UserModel.class));
 }
-public  void delet(Long id){
+public  void delete(Long id){
         UserModel validateId = findById(id);
         repository.deleteById(validateId.getId());
 }

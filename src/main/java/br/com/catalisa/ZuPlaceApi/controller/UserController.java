@@ -42,11 +42,11 @@ public class UserController {
   return ResponseEntity.created(uri).build();
     }
 @DeleteMapping(value = ID)
-public  ResponseEntity<Void> delet(@PathVariable Long id){
-service.delet(id);
+public  ResponseEntity<Void> delete(@PathVariable Long id){
+service.delete(id);
 return ResponseEntity.noContent().build();
 }
-@PutMapping
+@PutMapping(value = ID)
     public  ResponseEntity<UserDto> update(UserDto userDto){
         UserModel updateUser = service.update(userDto);
 
