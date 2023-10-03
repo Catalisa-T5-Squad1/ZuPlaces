@@ -18,16 +18,16 @@ public class AddresModel {
     private Long id;
 
     @Schema(description = "CEP", example = "87000-00")
-    private String zipCode;
+    private String cep;
 
     @Schema(description = "Rua/Av", example = "Rua Juruá")
-    private String publicPlace;
+    private String logradouro;
 
     @Schema(description = "Bairro", example = "Jardim Antunes")
-    private String neighborhood;
+    private String bairro;
 
     @Schema(description = "Cidade", example = "Maringá")
-    private String locality;
+    private String localidade;
 
     @Schema(description = "Estado", example = "PR")
     private String uf;

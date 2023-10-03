@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class AddresResponseDto {
+
     @Schema(description = "CEP", example = "87000-00")
     private String cep;
 

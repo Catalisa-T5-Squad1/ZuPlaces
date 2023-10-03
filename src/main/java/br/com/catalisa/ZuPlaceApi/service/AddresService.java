@@ -17,7 +17,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
@@ -34,11 +36,12 @@ public class AddresService {
     private AddresRepository addresRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-    public AddresResponseDto findCep(ZipCodeRequestDto cepString) {
+    public AddresResponseDto findZipCode(ZipCodeRequestDto cepString) {
         try {
             logger.debug("Método findCep chamado com CEP: {}", cepString.getCep());
+
 
 //            cepValidations.validaCep(cepString.cep());
 //            cepValidations.removedorDeMascaraCep(cepString.cep());
@@ -68,6 +71,20 @@ public class AddresService {
             logger.error("Erro ao buscar CEP: {}", e.getMessage());
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public List<AddresResponseDto> findAll(){
+        try{
+            logger.debug("Listando todos os endereços!");
+            List<AddresModel> findAddresList = addresRepository.findAll();
+            List<AddresResponseDto> addresResponseDtoList = findAddresList.stream()
+                    .map(addresModel -> modelMapper.map(addresModel, AddresResponseDto.class))
+                    .collect(Collectors.toList());
+            logger.debug("Endereços listados com sucesso!");
+            return addresResponseDtoList;
+        }catch (Exception e){
+            throw e;
         }
     }
 }
