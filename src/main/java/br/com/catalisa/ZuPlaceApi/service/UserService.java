@@ -7,6 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -15,8 +17,8 @@ public class UserService {
     @Autowired
     private ModelMapper mapper;
 
-    public void  findAll(){
-        repository.findAll();
+    public List<UserModel> findAll(){
+        return repository.findAll();
     }
    public UserModel findById(Long id){
 return  repository.findById(id).orElse(null);
