@@ -2,6 +2,8 @@ package br.com.catalisa.ZuPlaceApi.service;
 
 import br.com.catalisa.ZuPlaceApi.dto.AddresResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.ZipCodeRequestDto;
+import br.com.catalisa.ZuPlaceApi.exception.CepFormatException;
+import br.com.catalisa.ZuPlaceApi.exception.CepNullException;
 import br.com.catalisa.ZuPlaceApi.model.AddresModel;
 import br.com.catalisa.ZuPlaceApi.repository.AddresRepository;
 import com.google.gson.Gson;
@@ -42,9 +44,14 @@ public class AddresService {
         try {
             logger.debug("Método findCep chamado com CEP: {}", cepString.getCep());
 
+            logger.debug("Método removeMaskZipCode chamado");
+            removeMaskZipCode(cepString.getCep());
+            logger.info("Foi removido a mascara do cep com o método removeMaskZipCode");
 
-//            cepValidations.validaCep(cepString.cep());
-//            cepValidations.removedorDeMascaraCep(cepString.cep());
+            logger.debug("Método validZipCode chamado");
+            validZipCode(cepString.getCep());
+            logger.info("CEP foi validade pelo método validZipCode");
+
 
             HttpClient httpClient = HttpClient.newBuilder()
                     .connectTimeout(Duration.of(1, MINUTES))
@@ -85,6 +92,20 @@ public class AddresService {
             return addresResponseDtoList;
         }catch (Exception e){
             throw e;
+        }
+    }
+
+    public void validZipCode(String zipCode) throws CepNullException {
+        if (Objects.isNull(zipCode) || zipCode.isEmpty() || zipCode.isBlank()) throw new CepNullException("O cep informado não pode ser nulo ou vazio");
+        if (zipCode.length() > 9) throw new CepFormatException("CEP com números a mais");
+        if (zipCode.length() < 8) throw new CepFormatException("CEP faltando números");
+    }
+    public String removeMaskZipCode(String zipCode){
+        try {
+            validZipCode(zipCode);
+            return zipCode;
+        } catch (CepFormatException e){
+            return zipCode.replace("-", "");
         }
     }
 }
