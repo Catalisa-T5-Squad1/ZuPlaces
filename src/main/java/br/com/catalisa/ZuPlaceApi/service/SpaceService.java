@@ -44,7 +44,6 @@ public class SpaceService {
             logger.error("Erro ao listar espaços.", e);
             throw e;
         }
-
     }
 
     public SpaceResponseDto findById(Long id) {
