@@ -34,38 +34,49 @@ public class ResourceService {
     }
 
     public ResourceResponseDto findById(Long id) {
-        Optional<ResourceModel> optionalResourceModel = resourceRepository.findById(id);
+        try {
+            Optional<ResourceModel> optionalResourceModel = resourceRepository.findById(id);
 
-        if (optionalResourceModel.isPresent()) {
-            ResourceModel resourceModel = optionalResourceModel.get();
-            ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
-            return resourceResponseDto;
-        } else {
-            return null;
+            if (optionalResourceModel.isPresent()) {
+                ResourceModel resourceModel = optionalResourceModel.get();
+                ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
+                return resourceResponseDto;
+            } else {
+                return null;
+            }
+        } catch (Exception e){
+            throw e;
         }
     }
 
-
-    public ResourceResponseDto register(ResourceRequestDto resourceRequestDto){
-       ResourceModel resourceModel = modelMapper.map(resourceRequestDto, ResourceModel.class);
-       resourceModel = resourceRepository.save(resourceModel);
-       ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
-       return resourceResponseDto;
+    public ResourceResponseDto create(ResourceRequestDto resourceRequestDto){
+       try {
+           ResourceModel resourceModel = modelMapper.map(resourceRequestDto, ResourceModel.class);
+           resourceModel = resourceRepository.save(resourceModel);
+           ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
+           return resourceResponseDto;
+       } catch (Exception e){
+           throw e;
+       }
     }
 
     public ResourceResponseDto update(Long id, ResourceRequestDto updatedResourceDto) {
-        Optional<ResourceModel> optionalResourceModel = resourceRepository.findById(id);
+        try {
+            Optional<ResourceModel> optionalResourceModel = resourceRepository.findById(id);
 
-        if (optionalResourceModel.isPresent()) {
-            ResourceModel resourceModel = optionalResourceModel.get();
-            modelMapper.map(updatedResourceDto, resourceModel);
+            if (optionalResourceModel.isPresent()) {
+                ResourceModel resourceModel = optionalResourceModel.get();
+                modelMapper.map(updatedResourceDto, resourceModel);
 
-            resourceModel = resourceRepository.save(resourceModel);
+                resourceModel = resourceRepository.save(resourceModel);
 
-            ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
-            return resourceResponseDto;
-        } else {
-            return null; //retorna no futuro uma excpetion personalizada.
+                ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
+                return resourceResponseDto;
+            } else {
+                return null; //retorna no futuro uma excpetion personalizada.
+            }
+        } catch (Exception e){
+            throw e;
         }
     }
 

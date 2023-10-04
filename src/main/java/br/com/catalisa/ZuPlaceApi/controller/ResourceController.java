@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/zuplaces/resources")
@@ -38,7 +37,7 @@ public class ResourceController {
     @PostMapping
     @Operation(summary = " : Cadastra um novo recurso", method = "POST")
     public ResponseEntity<ResourceResponseDto> registerResource(@RequestBody ResourceRequestDto resourceRequestDto){
-        ResourceResponseDto resourceResponseDto = resourceService.register(resourceRequestDto);
+        ResourceResponseDto resourceResponseDto = resourceService.create(resourceRequestDto);
         return new ResponseEntity<>(resourceResponseDto, HttpStatus.CREATED);
     }
 
@@ -56,5 +55,4 @@ public class ResourceController {
         resourceService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
