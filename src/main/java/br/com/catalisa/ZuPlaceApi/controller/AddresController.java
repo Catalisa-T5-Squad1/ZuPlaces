@@ -28,8 +28,9 @@ public class AddresController {
     private AddresService addresService;
 
 
-    @Operation(summary = " : Lista todos os endereços cadastrados", method = "GET")
+
     @GetMapping
+    @Operation(summary = " : Lista todos os endereços cadastrados", method = "GET")
     public ResponseEntity<List<AddresResponseDto>> findAll(){
         logger.debug("Método findAll chamado");
         List<AddresResponseDto> addresList = addresService.findAll();
