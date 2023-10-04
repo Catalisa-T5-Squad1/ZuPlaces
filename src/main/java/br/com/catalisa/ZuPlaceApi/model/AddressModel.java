@@ -1,10 +1,21 @@
-package br.com.catalisa.ZuPlaceApi.dto;
+package br.com.catalisa.ZuPlaceApi.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Data
-public class AddresResponseDto {
+@Entity
+@Schema(name = "Endereço")
+public class AddressModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Schema(description = "CEP", example = "87000-00")
     private String cep;

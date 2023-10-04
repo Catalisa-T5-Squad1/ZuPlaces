@@ -1,8 +1,8 @@
 package br.com.catalisa.ZuPlaceApi.controller;
 
-import br.com.catalisa.ZuPlaceApi.dto.AddresResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.AddressResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.ZipCodeRequestDto;
-import br.com.catalisa.ZuPlaceApi.service.AddresService;
+import br.com.catalisa.ZuPlaceApi.service.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
@@ -18,30 +18,30 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/api/addres", produces = {"application/json"})
-@Tag(name = "Feature - Addres")
-public class AddresController {
+@RequestMapping(value = "/api/address", produces = {"application/json"})
+@Tag(name = "Feature - Address")
+public class AddressController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AddresController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
 
     @Autowired
-    private AddresService addresService;
+    private AddressService addressService;
 
 
 
     @GetMapping
     @Operation(summary = " : Lista todos os endereços cadastrados", method = "GET")
-    public ResponseEntity<List<AddresResponseDto>> findAll(){
+    public ResponseEntity<List<AddressResponseDto>> findAll(){
         logger.debug("Método findAll chamado");
-        List<AddresResponseDto> addresList = addresService.findAll();
-        logger.info("Total de endereços encontrados: {}", addresList.size());
-        return ResponseEntity.ok(addresList);
+        List<AddressResponseDto> addressList = addressService.findAll();
+        logger.info("Total de endereços encontrados: {}", addressList.size());
+        return ResponseEntity.ok(addressList);
     }
 
     @GetMapping(path = "/zipcode")
     @Operation(summary = " : Busca endereço pelo CEP", method = "GET")
-    public ResponseEntity<AddresResponseDto> findAddres(@RequestBody ZipCodeRequestDto zipCodeRequestDto){
-        AddresResponseDto addresFound = addresService.findZipCode(zipCodeRequestDto);
-        return ResponseEntity.ok(addresFound);
+    public ResponseEntity<AddressResponseDto> findAddress(@RequestBody ZipCodeRequestDto zipCodeRequestDto){
+        AddressResponseDto addressFound = addressService.findZipCode(zipCodeRequestDto);
+        return ResponseEntity.ok(addressFound);
     }
 }
