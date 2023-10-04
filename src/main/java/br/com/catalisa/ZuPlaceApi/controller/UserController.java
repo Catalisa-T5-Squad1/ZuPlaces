@@ -28,28 +28,29 @@ public class UserController {
                         .map(u -> mapper.map(u, UserDto.class))
                         .collect(Collectors.toList()));
     }
+
     @GetMapping(value = ID)
     public ResponseEntity<UserModel> findById (@PathVariable Long id){
         UserModel userModel = service.findById(id);
         return ResponseEntity.ok().body(userModel);
     }
+
     @PostMapping
-    public  ResponseEntity<UserDto> create(UserDto userDto){
+    public ResponseEntity<UserDto> create(UserDto userDto){
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path(ID)
                 .buildAndExpand(service.create(userDto).getId()).toUri();
-  return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).build();
     }
-@DeleteMapping(value = ID)
-public  ResponseEntity<Void> delete(@PathVariable Long id){
-service.delete(id);
-return ResponseEntity.noContent().build();
-}
-@PutMapping(value = ID)
-    public  ResponseEntity<UserDto> update(UserDto userDto){
-        UserModel updateUser = service.update(userDto);
-
-        return ResponseEntity.ok().body(mapper.map(updateUser, UserDto.class));
-}
+    @DeleteMapping(value = ID)
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping(value = ID)
+    public ResponseEntity<UserDto> update(UserDto userDto){
+            UserModel updateUser = service.update(userDto);
+            return ResponseEntity.ok().body(mapper.map(updateUser, UserDto.class));
+    }
 }

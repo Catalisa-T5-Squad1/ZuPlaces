@@ -20,19 +20,19 @@ public class UserService {
     public List<UserModel> findAll(){
         return repository.findAll();
     }
-   public UserModel findById(Long id){
-return  repository.findById(id).orElse(null);
-   }
-public  UserModel create(UserDto userDto){
+    public UserModel findById(Long id){
+        return  repository.findById(id).orElse(null);
+    }
+    public UserModel create(UserDto userDto){
         return repository.save(mapper.map(userDto, UserModel.class));
-}
-public  UserModel update (UserDto userDto){
+    }
+    public UserModel update (UserDto userDto){
         return repository.save(mapper.map(userDto, UserModel.class));
-}
-public  void delete(Long id){
+    }
+    public void delete(Long id){
         UserModel validateId = findById(id);
         repository.deleteById(validateId.getId());
-}
     }
+}
 
 
