@@ -43,7 +43,7 @@ public class ContatcService {
                 ContactResponseDto contactResponseDto = modelMapper.map(contactModel, ContactResponseDto.class);
                 return contactResponseDto;
             } else {
-                return null;
+                return null; //Deve retornar uma exception personalizada no futuro
             }
         } catch (Exception e){
             throw e;

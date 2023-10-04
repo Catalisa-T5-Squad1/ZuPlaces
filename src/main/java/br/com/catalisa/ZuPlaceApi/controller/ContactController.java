@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/zuplaces/contacts")
+@RequestMapping("/api/contacts")
 @Tag(name = "Feature - Contacts")
 public class ContactController {
     @Autowired

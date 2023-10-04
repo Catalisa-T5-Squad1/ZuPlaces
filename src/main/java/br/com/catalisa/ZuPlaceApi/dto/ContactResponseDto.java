@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactResponseDto {
-    @Schema(description = "Nome", example = "Ricardo")
+    @Schema(description = "Nome completo", example = "Ricardo dos Santos")
     private String name;
 
     @Schema(description = "E-mail", example = "usuario@zup.com.br")
     private String email;
 
-    @Schema(description = "Telefone", example = "(11) 9 8888-7777")
+    @Schema(description = "Telefone", example = "11988887777")
     private String phone;
 }
