@@ -66,6 +66,9 @@ public class AddressService {
 
             AddressModel addressModel = gson.fromJson(httpResponse.body(), AddressModel.class);
 
+            addressModel.setComplement(cepString.getComplement());
+            addressModel.setNumberAddress(cepString.getNumberAddress());
+
             AddressResponseDto addressResponseDto = modelMapper.map(addressModel, AddressResponseDto.class);
 
             addressRepository.save(addressModel);
