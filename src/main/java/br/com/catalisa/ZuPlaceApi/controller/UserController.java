@@ -1,15 +1,18 @@
 package br.com.catalisa.ZuPlaceApi.controller;
 
-import br.com.catalisa.ZuPlaceApi.dto.UserDto;
+import br.com.catalisa.ZuPlaceApi.dto.ResourceRequestDto;
+import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.UserRequestDto;
+import br.com.catalisa.ZuPlaceApi.dto.UserResponseDto;
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +25,10 @@ public class UserController {
     @Autowired
     private ModelMapper mapper;
     @GetMapping
-    public ResponseEntity<List<UserDto>> findAllUsers(){
+    public ResponseEntity<List<UserResponseDto>> findAllUsers(){
         return ResponseEntity.ok()
                 .body(service.findAll().stream()
-                        .map(u -> mapper.map(u, UserDto.class))
+                        .map(u -> mapper.map(u, UserResponseDto.class))
                         .collect(Collectors.toList()));
     }
 
@@ -36,21 +39,20 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(UserDto userDto){
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path(ID)
-                .buildAndExpand(service.create(userDto).getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    @Operation(summary = " : Cadastra um novo recurso", method = "POST")
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
+        UserResponseDto userResponseDto = service.create(userRequestDto);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
+
     @DeleteMapping(value = ID)
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
     @PutMapping(value = ID)
-    public ResponseEntity<UserDto> update(UserDto userDto){
-            UserModel updateUser = service.update(userDto);
-            return ResponseEntity.ok().body(mapper.map(updateUser, UserDto.class));
+    public ResponseEntity<UserResponseDto> update(UserResponseDto userResponseDto){
+            UserModel updateUser = service.update(userResponseDto);
+            return ResponseEntity.ok().body(mapper.map(updateUser, UserResponseDto.class));
     }
 }

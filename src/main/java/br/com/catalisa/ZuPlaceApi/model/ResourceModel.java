@@ -3,10 +3,8 @@ package br.com.catalisa.ZuPlaceApi.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,4 +17,6 @@ public class ResourceModel {
     private Long id;
     @Schema(description = "Nome", example = "Água potável")
     private String name;
+    @OneToMany(mappedBy = "resource")
+    private List<SpaceModel> spaces;
 }
