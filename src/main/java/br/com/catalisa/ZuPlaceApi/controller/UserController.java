@@ -40,7 +40,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = " : Cadastra um novo recurso", method = "POST")
-    public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserRequestDto userRequestDto){
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
         UserResponseDto userResponseDto = service.create(userRequestDto);
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }

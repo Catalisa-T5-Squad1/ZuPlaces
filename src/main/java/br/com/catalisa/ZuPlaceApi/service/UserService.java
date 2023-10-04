@@ -39,10 +39,10 @@ public class UserService {
         }
     }
 
-
     public UserModel update (UserResponseDto userResponseDto){
         return repository.save(mapper.map(userResponseDto, UserModel.class));
     }
+
     public void delete(Long id){
         UserModel validateId = findById(id);
         repository.deleteById(validateId.getId());
