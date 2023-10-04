@@ -17,13 +17,13 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -31,12 +31,13 @@ public class UserModel {
 
     private String phone;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String documentType;
 
-    @Column(nullable = false, unique = true)
+    //@Column(nullable = false, unique = true)
     private  String numberAdress;
 
     @OneToMany(mappedBy = "user")
     private List<SpaceModel> spaces;
+
 }

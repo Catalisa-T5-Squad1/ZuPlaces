@@ -17,7 +17,6 @@ public class ResourceModel {
     private Long id;
     @Schema(description = "Nome", example = "Água potável")
     private String name;
-
     @OneToMany(mappedBy = "resource")
     private List<SpaceModel> spaces;
 }

@@ -1,9 +1,12 @@
 package br.com.catalisa.ZuPlaceApi.dto;
 
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
+import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
