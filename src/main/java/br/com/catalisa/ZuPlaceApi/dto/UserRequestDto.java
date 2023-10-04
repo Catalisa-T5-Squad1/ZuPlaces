@@ -21,5 +21,4 @@ public class UserRequestDto {
     private String phone;
     @JsonProperty("documento_identificacao")
     private String documentType;
-
 }

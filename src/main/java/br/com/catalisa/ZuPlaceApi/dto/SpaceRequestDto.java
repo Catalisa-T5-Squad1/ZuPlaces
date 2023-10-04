@@ -1,5 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SpaceRequestDto {
 
+    @JsonProperty("nome")
     private String name;
 
-    private UserResponseDto user;
+    @JsonProperty("usuario_id")
+    private Long userId;
 
-    private ResourceRequestDto resource;
+    @JsonProperty("recurso_id")
+    private Long resourceId;
 
+    @JsonProperty("endereco")
     private ZipCodeRequestDto address;
 }

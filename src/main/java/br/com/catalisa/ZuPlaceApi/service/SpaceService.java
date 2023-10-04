@@ -3,11 +3,18 @@ package br.com.catalisa.ZuPlaceApi.service;
 import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseDto;
+import br.com.catalisa.ZuPlaceApi.exception.ResourceNotFoud;
 import br.com.catalisa.ZuPlaceApi.exception.SpaceNotFound;
+import br.com.catalisa.ZuPlaceApi.exception.UserNotFoud;
 import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
 import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
+import br.com.catalisa.ZuPlaceApi.model.UserModel;
+import br.com.catalisa.ZuPlaceApi.repository.ResourceRepository;
 import br.com.catalisa.ZuPlaceApi.repository.SpaceRepository;
+import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +30,12 @@ public class SpaceService {
 
     @Autowired
     SpaceRepository spaceRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    ResourceRepository resourceRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -70,7 +83,17 @@ public class SpaceService {
         try {
             logger.debug("Criando um novo espaço");
 
+            UserModel userModel = userRepository.findById(spaceRequestDto.getUserId())
+                    .orElseThrow(() -> new UserNotFoud(spaceRequestDto.getUserId()));
+
+            ResourceModel resourceModel = resourceRepository.findById(spaceRequestDto.getResourceId())
+                    .orElseThrow(() -> new ResourceNotFoud(spaceRequestDto.getResourceId()));
+
             SpaceModel spaceModel = modelMapper.map(spaceRequestDto, SpaceModel.class);
+
+            spaceModel.setUser(userModel);
+            spaceModel.setResource(resourceModel);
+
             spaceRepository.save(spaceModel);
 
             logger.debug("Espaço criado com sucesso. ID: {}", spaceModel.getId());
@@ -84,7 +107,6 @@ public class SpaceService {
             throw e;
         }
     }
-
 
     public void delete(Long id){
         try{

@@ -25,21 +25,21 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-
-
     @GetMapping
     @Operation(summary = " : Lista todos os endereços cadastrados", method = "GET")
     public ResponseEntity<List<AddressResponseDto>> findAll(){
         logger.debug("Método findAll chamado");
         List<AddressResponseDto> addressList = addressService.findAll();
         logger.info("Total de endereços encontrados: {}", addressList.size());
-        return ResponseEntity.status(HttpStatus.OK).body(addressList);
+        return ResponseEntity.ok(addressList);
     }
 
     @PostMapping
     @Operation(summary = " : Cadastra endereço pelo CEP", method = "POST")
     public ResponseEntity<AddressResponseDto> createAddress(@RequestBody ZipCodeRequestDto zipCodeRequestDto){
+        logger.debug("Método createAddress chamado");
         AddressResponseDto addressFound = addressService.createAddres(zipCodeRequestDto);
+        logger.info("Endereço cadastrado com sucesso: {} ", addressFound.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(addressFound);
     }
 }
