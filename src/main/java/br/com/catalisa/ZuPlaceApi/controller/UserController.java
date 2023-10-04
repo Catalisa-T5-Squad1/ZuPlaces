@@ -51,7 +51,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping(value = ID)
-    public ResponseEntity<UserResponseDto> update(UserResponseDto userResponseDto){
+    public ResponseEntity<UserResponseDto> update( @RequestBody UserResponseDto userResponseDto){
             UserModel updateUser = service.update(userResponseDto);
             return ResponseEntity.ok().body(mapper.map(updateUser, UserResponseDto.class));
     }
