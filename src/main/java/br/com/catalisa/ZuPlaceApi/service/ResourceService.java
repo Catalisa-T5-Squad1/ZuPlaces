@@ -33,11 +33,18 @@ public class ResourceService {
         }
     }
 
-    public ResourceResponseDto findById(Long id){
-        Optional<ResourceModel> resourceModel = resourceRepository.findById(id);
-        ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
-        return resourceResponseDto;
+    public ResourceResponseDto findById(Long id) {
+        Optional<ResourceModel> optionalResourceModel = resourceRepository.findById(id);
+
+        if (optionalResourceModel.isPresent()) {
+            ResourceModel resourceModel = optionalResourceModel.get();
+            ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
+            return resourceResponseDto;
+        } else {
+            return null;
+        }
     }
+
 
     public ResourceResponseDto register(ResourceRequestDto resourceRequestDto){
        ResourceModel resourceModel = modelMapper.map(resourceRequestDto, ResourceModel.class);
