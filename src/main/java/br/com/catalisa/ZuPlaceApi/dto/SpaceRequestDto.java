@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpaceResponseDto {
+public class SpaceRequestDto {
 
     private String name;
 
     private UserDto user;
 
-    private ResourceResponseDto resource;
+    private ResourceRequestDto resource;
 
-    private AddressResponseDto address;
-
+    private ZipCodeRequestDto address;
 }

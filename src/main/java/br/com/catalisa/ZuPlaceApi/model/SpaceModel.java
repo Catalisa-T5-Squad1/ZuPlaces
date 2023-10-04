@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -23,12 +20,18 @@ public class SpaceModel {
     @Schema(description = "Nome do Espaço", example = "Faculdade Estácio")
     private String name;
 
-    @Schema(description = "ID do Usuário", example = "3")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @Schema(description = "Usuário associado ao espaço")
     private UserModel user;
 
-    @Schema(description = "ID do Recurso", example = "2")
+    @ManyToOne
+    @JoinColumn(name = "resource_id")
+    @Schema(description = "Recurso associado ao espaço")
     private ResourceModel resource;
 
-    @Schema(description = "ID do Endereço", example = "2")
-    private AddresModel addres;
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    @Schema(description = "Endereço associado ao espaço")
+    private AddressModel address;
 }

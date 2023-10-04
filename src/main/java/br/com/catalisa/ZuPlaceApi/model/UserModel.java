@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,5 +32,9 @@ public class UserModel {
     private  String cep;
     @Column(nullable = false, unique = true)
     private  String numberAdress;
-    //spaces
+
+
+
+    @OneToMany(mappedBy = "user")
+    private List<SpaceModel> spaces;
 }
