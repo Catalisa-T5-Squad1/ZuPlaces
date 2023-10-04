@@ -1,11 +1,11 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
-import br.com.catalisa.ZuPlaceApi.dto.AddresResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.AddressResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.ZipCodeRequestDto;
 import br.com.catalisa.ZuPlaceApi.exception.CepFormatException;
 import br.com.catalisa.ZuPlaceApi.exception.CepNullException;
-import br.com.catalisa.ZuPlaceApi.model.AddresModel;
-import br.com.catalisa.ZuPlaceApi.repository.AddresRepository;
+import br.com.catalisa.ZuPlaceApi.model.AddressModel;
+import br.com.catalisa.ZuPlaceApi.repository.AddressRepository;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -27,20 +27,20 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 
 
 @Service
-public class AddresService {
+public class AddressService {
 
     private static final String viaCepUrl = "https://viacep.com.br/ws/";
     private static final Gson gson = new Gson();
 
-    private static final Logger logger = LoggerFactory.getLogger(AddresService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddressService.class);
 
     @Autowired
-    private AddresRepository addresRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public AddresResponseDto findZipCode(ZipCodeRequestDto cepString) {
+    public AddressResponseDto findZipCode(ZipCodeRequestDto cepString) {
         try {
             logger.debug("Método findCep chamado com CEP: {}", cepString.getCep());
 
@@ -64,15 +64,15 @@ public class AddresService {
 
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-            AddresModel addresModel = gson.fromJson(httpResponse.body(), AddresModel.class);
+            AddressModel addressModel = gson.fromJson(httpResponse.body(), AddressModel.class);
 
-            AddresResponseDto addresResponseDto = modelMapper.map(addresModel, AddresResponseDto.class);
+            AddressResponseDto addressResponseDto = modelMapper.map(addressModel, AddressResponseDto.class);
 
-            addresRepository.save(addresModel);
+            addressRepository.save(addressModel);
 
             logger.info("CEP {} encontrado com sucesso", cepString.getCep());
 
-            return addresResponseDto;
+            return addressResponseDto;
 
         } catch (IOException | InterruptedException e) {
             logger.error("Erro ao buscar CEP: {}", e.getMessage());
@@ -81,15 +81,15 @@ public class AddresService {
         }
     }
 
-    public List<AddresResponseDto> findAll(){
+    public List<AddressResponseDto> findAll(){
         try{
             logger.debug("Listando todos os endereços!");
-            List<AddresModel> findAddresList = addresRepository.findAll();
-            List<AddresResponseDto> addresResponseDtoList = findAddresList.stream()
-                    .map(addresModel -> modelMapper.map(addresModel, AddresResponseDto.class))
+            List<AddressModel> findAddressList = addressRepository.findAll();
+            List<AddressResponseDto> addressResponseDtoList = findAddressList.stream()
+                    .map(addressModel -> modelMapper.map(addressModel, AddressResponseDto.class))
                     .collect(Collectors.toList());
             logger.debug("Endereços listados com sucesso!");
-            return addresResponseDtoList;
+            return addressResponseDtoList;
         }catch (Exception e){
             throw e;
         }
