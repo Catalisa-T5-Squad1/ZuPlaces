@@ -1,6 +1,5 @@
 package br.com.catalisa.ZuPlaceApi.model;
 
-import br.com.catalisa.ZuPlaceApi.enums.DocumentType;
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,19 +15,24 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false, unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password;
-@Enumerated(EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)
     private PersonType personType;
 
     private String phone;
+
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-private DocumentType documentType;
+    private String documentType;
+
     @Column(nullable = false, unique = true)
     private  String numberAdress;
     //spaces
