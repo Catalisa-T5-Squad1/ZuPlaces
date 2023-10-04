@@ -34,9 +34,6 @@ public class UserModel {
     //@Column(nullable = false)
     private String documentType;
 
-    //@Column(nullable = false, unique = true)
-    private  String numberAdress;
-
     @OneToMany(mappedBy = "user")
     private List<SpaceModel> spaces;
 

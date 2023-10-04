@@ -1,23 +1,25 @@
 package br.com.catalisa.ZuPlaceApi.dto;
 
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
-import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDto {
+public class UserResponseDto {
     private Long id;
+    @JsonProperty("nome")
     private String name;
     private String email;
+    @JsonProperty("senha")
     private String password;
+    @JsonProperty("tipo_pessoa")
     private PersonType personType;
+    @JsonProperty("telefone")
     private String phone;
+    @JsonProperty("documento")
     private String documentType;
-    private String numberAdress;
 }

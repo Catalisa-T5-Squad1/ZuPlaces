@@ -11,7 +11,7 @@ public class SpaceResponseDto {
 
     private String name;
 
-    private UserDto user;
+    private UserResponseDto user;
 
     private ResourceResponseDto resource;
 
