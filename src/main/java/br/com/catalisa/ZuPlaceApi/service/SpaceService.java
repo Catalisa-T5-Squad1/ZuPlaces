@@ -1,6 +1,7 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
 import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseDto;
 import br.com.catalisa.ZuPlaceApi.exception.SpaceNotFound;
 import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
@@ -61,6 +62,37 @@ public class SpaceService {
             throw e;
         } catch (Exception e) {
             logger.error("Erro ao buscar Espaço pelo ID: {}", id, e);
+            throw e;
+        }
+    }
+
+    public SpaceResponseDto create(SpaceRequestDto spaceRequestDto) {
+        try {
+            logger.debug("Criando um novo espaço");
+
+            SpaceModel spaceModel = modelMapper.map(spaceRequestDto, SpaceModel.class);
+            spaceRepository.save(spaceModel);
+
+            logger.debug("Espaço criado com sucesso. ID: {}", spaceModel.getId());
+
+            SpaceResponseDto spaceResponseDto = modelMapper.map(spaceModel, SpaceResponseDto.class);
+            logger.debug("Espaço model foi convertido para SpaceResponseDto");
+
+            return spaceResponseDto;
+        } catch (Exception e) {
+            logger.error("Erro ao criar espaço.", e);
+            throw e;
+        }
+    }
+
+
+    public void delete(Long id){
+        try{
+            logger.debug("Excluindo espaço pelo ID: {}", id);
+            spaceRepository.deleteById(id);
+            logger.debug("Espaço excluido com sucesso. ID: {}", id);
+        } catch (SpaceNotFound e){
+            logger.error("Erro ao excluir o espaço pelo ID. {}", id, e);
             throw e;
         }
     }

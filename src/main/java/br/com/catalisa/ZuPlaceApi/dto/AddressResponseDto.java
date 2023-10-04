@@ -29,9 +29,4 @@ public class AddressResponseDto {
 
     @Schema(description = "Estado", example = "PR")
     private String uf;
-
-
-
-
-
 }
