@@ -1,9 +1,9 @@
 package br.com.catalisa.ZuPlaceApi.repository;
 
-import br.com.catalisa.ZuPlaceApi.model.AddresModel;
+import br.com.catalisa.ZuPlaceApi.model.ContactModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AddresRepository extends JpaRepository<AddresModel, Long> {
+public interface ContatcRepository extends JpaRepository<ContactModel, Long> {
 }

@@ -1,9 +1,9 @@
 package br.com.catalisa.ZuPlaceApi.repository;
 
-import br.com.catalisa.ZuPlaceApi.model.UserModel;
+import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserModel, Long> {
+public interface ResourceRepository extends JpaRepository<ResourceModel, Long> {
 }
