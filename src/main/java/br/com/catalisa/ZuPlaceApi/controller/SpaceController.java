@@ -1,5 +1,7 @@
 package br.com.catalisa.ZuPlaceApi.controller;
 
+import br.com.catalisa.ZuPlaceApi.dto.ResourceRequestDto;
+import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseDto;
 import br.com.catalisa.ZuPlaceApi.service.SpaceService;
@@ -39,5 +41,19 @@ public class SpaceController {
     public ResponseEntity<SpaceResponseDto> findSpacesById(@PathVariable Long id){
         SpaceResponseDto spaceResponseDto = spaceService.findById(id);
         return new ResponseEntity<>(spaceResponseDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}") // falar para o rick que falta o / no put dele
+    @Operation(summary = " : Altera um space cadastrado por ID", method = "PUT")
+    public ResponseEntity<SpaceResponseDto> alterSpace(@PathVariable Long id, @RequestBody SpaceRequestDto spaceRequestDto){
+        SpaceResponseDto spaceResponseDtoResponseDto = spaceService.update(id, spaceRequestDto);
+        return new ResponseEntity<>(spaceResponseDtoResponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = " : Deleta um espaço cadastrado por ID", method = "DELETE")
+    public ResponseEntity<Void> deleteSpace(@PathVariable Long id){
+        spaceService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

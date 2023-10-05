@@ -1,9 +1,9 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
 import br.com.catalisa.ZuPlaceApi.dto.*;
-import br.com.catalisa.ZuPlaceApi.exception.ResourceNotFoud;
-import br.com.catalisa.ZuPlaceApi.exception.SpaceNotFound;
-import br.com.catalisa.ZuPlaceApi.exception.UserNotFoud;
+import br.com.catalisa.ZuPlaceApi.exception.ResourceNotFoudException;
+import br.com.catalisa.ZuPlaceApi.exception.SpaceNotFoundException;
+import br.com.catalisa.ZuPlaceApi.exception.UserNotFoudException;
 import br.com.catalisa.ZuPlaceApi.model.AddressModel;
 import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
 import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
@@ -12,9 +12,7 @@ import br.com.catalisa.ZuPlaceApi.repository.AddressRepository;
 import br.com.catalisa.ZuPlaceApi.repository.ResourceRepository;
 import br.com.catalisa.ZuPlaceApi.repository.SpaceRepository;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +55,7 @@ public class SpaceService {
 
             logger.info("Espaços listados com sucesso.");
             return spaceResponseDto;
-        } catch (SpaceNotFound e) {
+        } catch (SpaceNotFoundException e) {
             logger.error("Erro ao listar os espaços, não existe espaços cadastrados.");
             throw e;
         } catch (Exception e){
@@ -66,21 +64,21 @@ public class SpaceService {
         }
     }
 
-    public SpaceResponseDto findById(Long id) {
+    public SpaceResponseDto findById(Long spaceId) {
         try {
-            logger.debug("Buscando espaço pelo ID: {}", id);
+            logger.debug("Buscando espaço pelo ID: {}", spaceId);
 
-            return spaceRepository.findById(id)
+            return spaceRepository.findById(spaceId)
                     .map(spaceModel -> modelMapper.map(spaceModel, SpaceResponseDto.class))
                     .orElseThrow(() -> {
-                        logger.error("Espaço com ID {} não encontrado.", id);
-                        return new SpaceNotFound(id);
+                        logger.error("Espaço com ID {} não encontrado.", spaceId);
+                        return new SpaceNotFoundException(spaceId);
                     });
-        } catch (SpaceNotFound e) {
-            logger.error("Espaço com ID {} não encontrado.", id);
+        } catch (SpaceNotFoundException e) {
+            logger.error("Espaço com ID {} não encontrado.", spaceId);
             throw e;
         } catch (Exception e) {
-            logger.error("Erro ao buscar Espaço pelo ID: {}", id, e);
+            logger.error("Erro ao buscar Espaço pelo ID: {}", spaceId, e);
             throw e;
         }
     }
@@ -91,12 +89,12 @@ public class SpaceService {
             logger.debug("Buscando User");
             logger.info("Usuário com o ID: {} , encontrado",spaceRequestDto.getUserId());
             UserModel userModel = userRepository.findById(spaceRequestDto.getUserId())
-                    .orElseThrow(() -> new UserNotFoud(spaceRequestDto.getUserId()));
+                    .orElseThrow(() -> new UserNotFoudException(spaceRequestDto.getUserId()));
 
             logger.debug("Buscando Recurso");
             logger.info("Recurso com o ID: {} , encontrado",spaceRequestDto.getUserId());
             ResourceModel resourceModel = resourceRepository.findById(spaceRequestDto.getResourceId())
-                    .orElseThrow(() -> new ResourceNotFoud(spaceRequestDto.getResourceId()));
+                    .orElseThrow(() -> new ResourceNotFoudException(spaceRequestDto.getResourceId()));
 
             logger.debug("Instanciando os dados para o Address");
 
@@ -132,15 +130,56 @@ public class SpaceService {
         }
     }
 
-    public void delete(Long id){
-        try{
-            logger.debug("Excluindo espaço pelo ID: {}", id);
-            spaceRepository.deleteById(id);
-            logger.debug("Espaço excluido com sucesso. ID: {}", id);
-        } catch (SpaceNotFound e){
-            logger.error("Erro ao excluir o espaço pelo ID. {}", id, e);
+    public SpaceResponseDto update(Long spaceId, SpaceRequestDto updatedSpaceDto) {
+        try {
+            logger.debug("Atualizando espaço com ID: {}", spaceId);
+
+            SpaceModel existingSpace = spaceRepository.findById(spaceId)
+                    .orElseThrow(() -> new SpaceNotFoundException(spaceId));
+
+            existingSpace.setName(updatedSpaceDto.getName());
+
+            ResourceModel updatedResource = resourceRepository.findById(updatedSpaceDto.getResourceId())
+                    .orElseThrow(() -> new ResourceNotFoudException(updatedSpaceDto.getResourceId()));
+            existingSpace.setResource(updatedResource);
+
+            ZipCodeRequestDto updatedZipCodeDto = new ZipCodeRequestDto();
+            updatedZipCodeDto.setCep(updatedSpaceDto.getAddress().getCep());
+            updatedZipCodeDto.setComplement(updatedSpaceDto.getAddress().getComplement());
+            updatedZipCodeDto.setNumberAddress(updatedSpaceDto.getAddress().getNumberAddress());
+
+            AddressResponseDto updatedAddressResponseDto = addressService.createAddres(updatedZipCodeDto);
+            AddressModel updatedAddressModel = modelMapper.map(updatedAddressResponseDto, AddressModel.class);
+
+            addressRepository.save(updatedAddressModel);
+
+            existingSpace.setAddress(updatedAddressModel);
+
+            spaceRepository.save(existingSpace);
+
+            logger.debug("Espaço atualizado com sucesso. ID: {}", spaceId);
+
+            SpaceResponseDto spaceResponseDto = modelMapper.map(existingSpace, SpaceResponseDto.class);
+            logger.debug("Espaço model foi convertido para SpaceResponseDto");
+
+            return spaceResponseDto;
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar espaço.", e);
             throw e;
         }
     }
 
+    public void delete(Long spaceId){
+        try{
+            logger.debug("Excluindo espaço pelo ID: {}", spaceId);
+            SpaceModel existingSpace = spaceRepository.findById(spaceId)
+                    .orElseThrow(() -> new SpaceNotFoundException(spaceId));
+
+            spaceRepository.delete(existingSpace);
+            logger.debug("Espaço excluido com sucesso. ID: {}", spaceId);
+        } catch (SpaceNotFoundException e){
+            logger.error("Erro ao excluir o espaço pelo ID. {}", spaceId, e);
+            throw e;
+        }
+    }
 }
