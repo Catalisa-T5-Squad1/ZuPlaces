@@ -1,14 +1,14 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
-import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestDto;
-import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.*;
 import br.com.catalisa.ZuPlaceApi.exception.ResourceNotFoud;
 import br.com.catalisa.ZuPlaceApi.exception.SpaceNotFound;
 import br.com.catalisa.ZuPlaceApi.exception.UserNotFoud;
+import br.com.catalisa.ZuPlaceApi.model.AddressModel;
 import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
 import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
+import br.com.catalisa.ZuPlaceApi.repository.AddressRepository;
 import br.com.catalisa.ZuPlaceApi.repository.ResourceRepository;
 import br.com.catalisa.ZuPlaceApi.repository.SpaceRepository;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
@@ -36,6 +36,12 @@ public class SpaceService {
 
     @Autowired
     ResourceRepository resourceRepository;
+
+    @Autowired
+    AddressService addressService;
+
+    @Autowired
+    AddressRepository addressRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -82,18 +88,36 @@ public class SpaceService {
     public SpaceResponseDto create(SpaceRequestDto spaceRequestDto) {
         try {
             logger.debug("Criando um novo espaço");
-
+            logger.debug("Buscando User");
+            logger.info("Usuário com o ID: {} , encontrado",spaceRequestDto.getUserId());
             UserModel userModel = userRepository.findById(spaceRequestDto.getUserId())
                     .orElseThrow(() -> new UserNotFoud(spaceRequestDto.getUserId()));
 
+            logger.debug("Buscando Recurso");
+            logger.info("Recurso com o ID: {} , encontrado",spaceRequestDto.getUserId());
             ResourceModel resourceModel = resourceRepository.findById(spaceRequestDto.getResourceId())
                     .orElseThrow(() -> new ResourceNotFoud(spaceRequestDto.getResourceId()));
 
-            SpaceModel spaceModel = modelMapper.map(spaceRequestDto, SpaceModel.class);
+            logger.debug("Instanciando os dados para o Address");
 
+            ZipCodeRequestDto zipCodeRequestDto = new ZipCodeRequestDto();
+            zipCodeRequestDto.setCep(spaceRequestDto.getAddress().getCep());
+            zipCodeRequestDto.setComplement(spaceRequestDto.getAddress().getComplement());
+            zipCodeRequestDto.setNumberAddress(spaceRequestDto.getAddress().getNumberAddress());
+
+            logger.info("Buscando o cep {} ", spaceRequestDto.getAddress().getCep());
+            AddressResponseDto addressResponseDto = addressService.createAddres(zipCodeRequestDto);
+            AddressModel addressModelSave = modelMapper.map(addressResponseDto, AddressModel.class);
+            logger.info("Salvando Endereço");
+            addressRepository.save(addressModelSave);
+
+            SpaceModel spaceModel = new SpaceModel();
+            spaceModel.setName(spaceRequestDto.getName());
             spaceModel.setUser(userModel);
             spaceModel.setResource(resourceModel);
+            spaceModel.setAddress(addressModelSave);
 
+            logger.info("Salvando Espaço no banco de dados");
             spaceRepository.save(spaceModel);
 
             logger.debug("Espaço criado com sucesso. ID: {}", spaceModel.getId());
