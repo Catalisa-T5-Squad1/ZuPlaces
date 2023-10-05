@@ -40,7 +40,7 @@ public class AddressService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public AddressResponseDto findZipCode(ZipCodeRequestDto cepString) {
+    public AddressResponseDto createAddres(ZipCodeRequestDto cepString) {
         try {
             logger.debug("Método findCep chamado com CEP: {}", cepString.getCep());
 
@@ -71,7 +71,9 @@ public class AddressService {
 
             AddressResponseDto addressResponseDto = modelMapper.map(addressModel, AddressResponseDto.class);
 
-            addressRepository.save(addressModel);
+            AddressModel addressModelSave = modelMapper.map(addressResponseDto, AddressModel.class);
+
+            addressRepository.save(addressModelSave);
 
             logger.info("CEP {} encontrado com sucesso", cepString.getCep());
 

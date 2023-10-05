@@ -8,11 +8,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,8 +25,6 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-
-
     @GetMapping
     @Operation(summary = " : Lista todos os endereços cadastrados", method = "GET")
     public ResponseEntity<List<AddressResponseDto>> findAll(){
@@ -38,10 +34,12 @@ public class AddressController {
         return ResponseEntity.ok(addressList);
     }
 
-    @GetMapping(path = "/zipcode")
-    @Operation(summary = " : Busca endereço pelo CEP", method = "GET")
-    public ResponseEntity<AddressResponseDto> findAddress(@RequestBody ZipCodeRequestDto zipCodeRequestDto){
-        AddressResponseDto addressFound = addressService.findZipCode(zipCodeRequestDto);
-        return ResponseEntity.ok(addressFound);
+    @PostMapping
+    @Operation(summary = " : Cadastra endereço pelo CEP", method = "POST")
+    public ResponseEntity<AddressResponseDto> createAddress(@RequestBody ZipCodeRequestDto zipCodeRequestDto){
+        logger.debug("Método createAddress chamado");
+        AddressResponseDto addressFound = addressService.createAddres(zipCodeRequestDto);
+        logger.info("Endereço cadastrado com sucesso: {} ", addressFound.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressFound);
     }
 }
