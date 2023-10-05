@@ -1,5 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,7 @@ public class AddressModel {
     @Schema(description = "Estado", example = "PR")
     private String uf;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "address")
     private SpaceModel space;
 }

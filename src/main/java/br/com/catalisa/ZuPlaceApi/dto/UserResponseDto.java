@@ -20,6 +20,6 @@ public class UserResponseDto {
     private PersonType personType;
     @JsonProperty("telefone")
     private String phone;
-    @JsonProperty("documento")
+    @JsonProperty("documento_identificacao")
     private String documentType;
 }
