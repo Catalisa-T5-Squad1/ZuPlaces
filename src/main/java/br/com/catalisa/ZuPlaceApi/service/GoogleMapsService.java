@@ -22,6 +22,7 @@ public class GoogleMapsService {
         this.restTemplate = new RestTemplate();
     }
 
+
     public CoordsResponseDto geocodeAddress(String address) {
         String geocodingBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json";
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(geocodingBaseUrl)
