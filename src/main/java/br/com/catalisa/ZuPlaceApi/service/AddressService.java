@@ -1,6 +1,7 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
 import br.com.catalisa.ZuPlaceApi.dto.AddressResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.CoordsResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.ZipCodeRequestDto;
 import br.com.catalisa.ZuPlaceApi.exception.CepFormatException;
 import br.com.catalisa.ZuPlaceApi.exception.CepNullException;
@@ -38,6 +39,9 @@ public class AddressService {
     private AddressRepository addressRepository;
 
     @Autowired
+    GoogleMapsService googleMapsService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     public AddressResponseDto createAddres(ZipCodeRequestDto cepString) {
@@ -73,8 +77,16 @@ public class AddressService {
 
             AddressModel addressModelSave = modelMapper.map(addressResponseDto, AddressModel.class);
 
-            addressRepository.save(addressModelSave);
+            //String addressMoreNumber = addressModelSave.getLogradouro() + " " + addressModelSave.getNumberAddress();
 
+           // String addressMoreNumber = addressModel.getLogradouro() + " " + addressModel.getNumberAddress();
+
+            //CoordsResponseDto coordsResponseDto = googleMapsService.geocodeAddress(addressMoreNumber);
+
+            //addressModel.setLatitude(coordsResponseDto.getLatitude());
+           // addressModel.setLongitude(coordsResponseDto.getLongitude());
+
+            addressRepository.save(addressModelSave);
             logger.info("CEP {} encontrado com sucesso", cepString.getCep());
 
             return addressResponseDto;

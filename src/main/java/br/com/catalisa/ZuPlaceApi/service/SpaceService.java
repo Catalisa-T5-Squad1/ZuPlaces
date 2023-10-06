@@ -42,6 +42,9 @@ public class SpaceService {
     AddressRepository addressRepository;
 
     @Autowired
+    GoogleMapsService googleMapsService;
+
+    @Autowired
     ModelMapper modelMapper;
 
     public List<SpaceResponseDto> findAll(){
