@@ -25,7 +25,6 @@ public class UserController {
     @Autowired
     private ModelMapper mapper;
 
-
     @GetMapping
     @Operation(summary = "lista todos os usuarios cadastrados", method = "GET")
     public ResponseEntity<List<UserResponseDto>> findAllUsers(){
@@ -46,9 +45,11 @@ public class UserController {
     @PostMapping
 
     @Operation(summary = " : Cadastra um novo usuario", method = "POST")
+
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
-        UserResponseDto userResponseDto = service.create(userRequestDto);
-        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
+        UserResponseDto responseDto = service.create(userRequestDto);
+
+        return new  ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = ID)

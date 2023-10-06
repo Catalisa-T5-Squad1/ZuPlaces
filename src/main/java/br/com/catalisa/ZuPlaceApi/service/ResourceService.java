@@ -73,7 +73,7 @@ public class ResourceService {
                 ResourceResponseDto resourceResponseDto = modelMapper.map(resourceModel, ResourceResponseDto.class);
                 return resourceResponseDto;
             } else {
-                return null; //retorna no futuro uma excpetion personalizada.
+                return null;
             }
         } catch (Exception e){
             throw e;
