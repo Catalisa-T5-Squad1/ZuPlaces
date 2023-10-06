@@ -77,15 +77,6 @@ public class AddressService {
 
             AddressModel addressModelSave = modelMapper.map(addressResponseDto, AddressModel.class);
 
-            //String addressMoreNumber = addressModelSave.getLogradouro() + " " + addressModelSave.getNumberAddress();
-
-           // String addressMoreNumber = addressModel.getLogradouro() + " " + addressModel.getNumberAddress();
-
-            //CoordsResponseDto coordsResponseDto = googleMapsService.geocodeAddress(addressMoreNumber);
-
-            //addressModel.setLatitude(coordsResponseDto.getLatitude());
-           // addressModel.setLongitude(coordsResponseDto.getLongitude());
-
             addressRepository.save(addressModelSave);
             logger.info("CEP {} encontrado com sucesso", cepString.getCep());
 

@@ -55,12 +55,12 @@ public class AddressController {
     }
 
     @GetMapping(path = "/teste2")
-    public ResponseEntity<DistanceRespondeDto> createDistance(@RequestBody DistanceRequestDto distanceRequestDto){
-        DistanceRespondeDto distanceRespondeDto = googleMapsService.calculateDistance(
+    public ResponseEntity<GoogleDistanceMatrixResponseDto> createDistance(@RequestBody DistanceRequestDto distanceRequestDto){
+        GoogleDistanceMatrixResponseDto googleDistanceMatrixResponseDto = googleMapsService.getDistanceBetweenCeps(
                 distanceRequestDto.getLatitudeOrigem(),
                 distanceRequestDto.getLongitudeOrigem(),
                 distanceRequestDto.getLatitudeDestino(),
                 distanceRequestDto.getLongitudeDestino());
-        return ResponseEntity.status(HttpStatus.OK).body(distanceRespondeDto);
+        return ResponseEntity.status(HttpStatus.OK).body(googleDistanceMatrixResponseDto);
     }
 }
