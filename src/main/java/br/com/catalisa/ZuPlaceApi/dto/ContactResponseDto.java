@@ -17,4 +17,10 @@ public class ContactResponseDto {
 
     @Schema(description = "Telefone", example = "11988887777")
     private String phone;
+
+    @Schema(description = "Usuário", example = "USP")
+    private UserResponseDto userResponseDto;
+
+    @Schema(description = "Espaço", example = "Biblioteca - Bloco A")
+    private SpaceResponseDto spaceResponseDto;
 }

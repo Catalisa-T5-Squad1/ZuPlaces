@@ -1,14 +1,10 @@
 package br.com.catalisa.ZuPlaceApi.model;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -28,4 +24,15 @@ public class ContactModel{
 
     @Schema(description = "Telefone", example = "11988887777")
     private String phone;
+
+    @Schema(description = "Descrição", example = "Gostaria de indicar esse espaço na empresa XPTO")
+    private String description;
+
+    @OneToOne
+    @Schema(description = "Usuário", example = "USP")
+    private UserModel userModel;
+
+    @OneToOne
+    @Schema(description = "Espaço", example = "Biblioteca - Bloco A")
+    private SpaceModel spaceModel;
 }

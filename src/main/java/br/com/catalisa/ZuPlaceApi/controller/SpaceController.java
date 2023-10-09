@@ -1,9 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.controller;
 
-import br.com.catalisa.ZuPlaceApi.dto.ResourceRequestDto;
-import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestDto;
-import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.*;
 import br.com.catalisa.ZuPlaceApi.service.SpaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

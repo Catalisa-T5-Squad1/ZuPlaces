@@ -19,4 +19,7 @@ public class ResourceModel {
     private String name;
     @OneToMany(mappedBy = "resource")
     private List<SpaceModel> spaces;
+
+    public ResourceModel(long l, String aguaPotavel) {
+    }
 }
