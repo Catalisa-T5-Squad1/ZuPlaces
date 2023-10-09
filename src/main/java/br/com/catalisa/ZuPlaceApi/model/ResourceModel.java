@@ -20,6 +20,6 @@ public class ResourceModel {
     @OneToMany(mappedBy = "resource")
     private List<SpaceModel> spaces;
 
-    public ResourceModel(long l, String águaPotável) {
+    public ResourceModel(long l, String aguaPotavel) {
     }
 }
