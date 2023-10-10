@@ -2,7 +2,7 @@ package br.com.catalisa.ZuPlaceApi.controller;
 
 import br.com.catalisa.ZuPlaceApi.dto.ContactRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.ContactResponseDto;
-import br.com.catalisa.ZuPlaceApi.service.ContatcService;
+import br.com.catalisa.ZuPlaceApi.service.ContactService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 @Tag(name = "Feature - Contacts")
 public class ContactController {
     @Autowired
-    ContatcService contactService;
+    ContactService contactService;
 
     @GetMapping
     @Operation(summary = " : Lista todos os contatos cadastrados", method = "GET")

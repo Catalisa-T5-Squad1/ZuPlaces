@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ContatcService {
+public class ContactService {
     @Autowired
     ContactRepository contactRepository;
     @Autowired
