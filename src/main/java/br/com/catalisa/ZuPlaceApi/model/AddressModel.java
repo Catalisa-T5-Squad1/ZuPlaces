@@ -1,5 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.model;
 
+import br.com.catalisa.ZuPlaceApi.dto.CoordsResponseDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -43,9 +44,8 @@ public class AddressModel {
     @Schema(description = "Estado", example = "PR")
     private String uf;
 
-    private Double longitude;
-
     private Double latitude;
+    private Double longitude;
 
     @JsonIgnore
     @OneToOne(mappedBy = "address")
