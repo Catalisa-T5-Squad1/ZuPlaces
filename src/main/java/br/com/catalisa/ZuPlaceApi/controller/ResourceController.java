@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/zuplaces/resources")
+@RequestMapping("/api/resources")
 @Tag(name = "Feature - Resources")
 public class ResourceController {
 
@@ -41,7 +41,7 @@ public class ResourceController {
         return new ResponseEntity<>(resourceResponseDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @Operation(summary = " : Altera um recurso cadastrado por ID", method = "PUT")
     public ResponseEntity<ResourceResponseDto> alterResource(@PathVariable Long id,
             @RequestBody ResourceRequestDto resourceRequestDto){

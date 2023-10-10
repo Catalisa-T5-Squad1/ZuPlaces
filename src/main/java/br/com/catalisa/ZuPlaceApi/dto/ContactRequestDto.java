@@ -17,4 +17,10 @@ public class ContactRequestDto {
 
     @Schema(description = "Telefone", example = "11988887777")
     private String phone;
+
+    @Schema(description = "Usuário", example = "USP")
+    private UserRequestDto userRequestDto;
+
+    @Schema(description = "Espaço", example = "Biblioteca - Bloco A")
+    private SpaceRequestDto spaceRequestDto;
 }
