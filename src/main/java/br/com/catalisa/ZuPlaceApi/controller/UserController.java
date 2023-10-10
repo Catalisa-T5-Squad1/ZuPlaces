@@ -37,19 +37,20 @@ public class UserController {
 
     @GetMapping(value = ID)
     @Operation(summary = "busca um usuario cadastrado por id", method = "GET")
-    public ResponseEntity<UserModel> findById (@PathVariable Long id){
-        UserModel userModel = service.findById(id);
-        return ResponseEntity.ok().body(userModel);
+    public ResponseEntity<UserResponseDto> findById (@PathVariable Long id){
+
+        return ResponseEntity.ok().body(mapper.map(service.findById(id), UserResponseDto.class));
     }
 
     @PostMapping
 
     @Operation(summary = " : Cadastra um novo usuario", method = "POST")
 
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
-        UserResponseDto responseDto = service.create(userRequestDto);
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserResponseDto responseDto){
+UserModel response = service.create(responseDto);
 
-        return new  ResponseEntity<>(responseDto, HttpStatus.CREATED);
+
+        return new  ResponseEntity<>(mapper.map(response, UserResponseDto.class), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = ID)
@@ -60,8 +61,9 @@ public class UserController {
     }
     @PutMapping(value = ID)
     @Operation(summary = "atualiza um usuario existente", method = "PUT")
-    public ResponseEntity<UserResponseDto> update( @RequestBody UserResponseDto userResponseDto){
-            UserModel updateUser = service.update(userResponseDto);
+
+    public ResponseEntity<UserResponseDto> update( @PathVariable Long id, @RequestBody UserResponseDto userResponseDto){
+            UserModel updateUser = service.update(id, userResponseDto);
             return ResponseEntity.ok().body(mapper.map(updateUser, UserResponseDto.class));
     }
 }
