@@ -1,8 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
-import br.com.catalisa.ZuPlaceApi.dto.CoordsResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.GoogleDistanceMatrixResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.GoogleGeocodeResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.*;
 import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,43 @@ public class GoogleMapsService {
     @Value("${google.maps.api.key}")
     private String apiKey;
 
+    @Autowired
+    @Value("${abstractapi.api.key}")
+    private String abstractApiKey;
+
     private static final Gson gson = new Gson();
+
+
+    public GeoLocationUserResponseDto getLatitudeAndLongitudeUser() throws ExternalRequestFailureException {
+        try {
+            String baseURL = "http://ipgeolocation.abstractapi.com/v1/";
+            String url = baseURL
+                    + "?api_key=" + abstractApiKey;
+
+            HttpClient httpClient = HttpClient.newHttpClient();
+
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            GetGeolocationDto getGeolocationDto = gson.fromJson(httpResponse.body(), GetGeolocationDto.class);
+
+            if (getGeolocationDto.getLatitude() < 0 && getGeolocationDto.getLongitude() < 0) {
+                double latitude = getGeolocationDto.getLatitude();
+                double longitude = getGeolocationDto.getLongitude();
+                String ipAddress = getGeolocationDto.getIp_address();
+                return new GeoLocationUserResponseDto(latitude, longitude,ipAddress);
+            }
+
+            return new GeoLocationUserResponseDto(0.0, 0.0, null);
+        }catch (IOException | InterruptedException e){
+            throw new ExternalRequestFailureException("Falhou" + e);
+        }
+    }
+
 
     public CoordsResponseDto geocodeAddress(String address) throws ExternalRequestFailureException {
         try {

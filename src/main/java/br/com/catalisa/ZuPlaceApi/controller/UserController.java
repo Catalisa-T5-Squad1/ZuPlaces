@@ -43,14 +43,10 @@ public class UserController {
     }
 
     @PostMapping
-
     @Operation(summary = " : Cadastra um novo usuario", method = "POST")
-
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserResponseDto responseDto){
-UserModel response = service.create(responseDto);
-
-
-        return new  ResponseEntity<>(mapper.map(response, UserResponseDto.class), HttpStatus.CREATED);
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
+        UserResponseDto userResponseDto = service.create(userRequestDto);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = ID)
@@ -61,7 +57,6 @@ UserModel response = service.create(responseDto);
     }
     @PutMapping(value = ID)
     @Operation(summary = "atualiza um usuario existente", method = "PUT")
-
     public ResponseEntity<UserResponseDto> update( @PathVariable Long id, @RequestBody UserResponseDto userResponseDto){
             UserModel updateUser = service.update(id, userResponseDto);
             return ResponseEntity.ok().body(mapper.map(updateUser, UserResponseDto.class));
