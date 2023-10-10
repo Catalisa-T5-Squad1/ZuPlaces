@@ -2,14 +2,13 @@ package br.com.catalisa.ZuPlaceApi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SpaceModel {
@@ -34,4 +33,8 @@ public class SpaceModel {
     @JoinColumn(name = "address_id")
     @Schema(description = "Endereço associado ao espaço")
     private AddressModel address;
+
+    private double distance;
+
+
 }

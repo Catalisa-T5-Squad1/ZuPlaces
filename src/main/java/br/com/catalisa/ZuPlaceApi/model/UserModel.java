@@ -1,16 +1,15 @@
 package br.com.catalisa.ZuPlaceApi.model;
 
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class UserModel {
     @Id
