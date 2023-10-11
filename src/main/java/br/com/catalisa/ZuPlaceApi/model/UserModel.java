@@ -37,8 +37,8 @@ public class UserModel {
 
     private String phone;
 
-    @CPF(message = "cpf inválido")
-    @CNPJ(message = "CNPJ inválido")
+    //@CPF(message = "CPF inválido")
+    //@CNPJ(message = "CNPJ inválido")
     private String documentType;
 
     @OneToMany(mappedBy = "user")

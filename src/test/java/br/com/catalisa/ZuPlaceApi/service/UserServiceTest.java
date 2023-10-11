@@ -9,9 +9,11 @@ import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,6 +28,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     private static Long ID = 1L;
     private  static final Integer INDEX = 0;
@@ -41,14 +44,18 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
 
     @InjectMocks
     private UserService service;
-
     @Mock
     private UserRepository repository;
     @Mock
     private ModelMapper mapper;
+
+    @Mock
     private UserModel userModel;
-    private UserRequestDto requestDto;
+    private UserRequestDto userRequestDto;
+
+    @Mock
     private UserResponseDto responseDto;
+
     private Optional<UserModel> optionalUserModel;
 
     @BeforeEach
@@ -107,7 +114,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     @Test
     void whenCreateThenReturnASuccess(){
         when(repository.save(any())).thenReturn(userModel);
-        UserModel response = service.create(responseDto);
+        UserResponseDto response = service.create(userRequestDto);
     assertNotNull(response);
 
         assertEquals(UserModel.class, response.getClass());
@@ -118,14 +125,13 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
         assertEquals(personType, response.getPersonType());
         assertEquals(PHONE, response.getPhone());
         assertEquals(DOCUMENT_TYPE, response.getDocumentType());
-        assertEquals(SPACES, response.getSpaces());
     }
 
     @Test
     void whenCreateThenReturnResourseNotFoundException(){
         when(repository.save(any())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
-            service.create(responseDto);
+            service.create(userRequestDto);
         } catch (Exception e){
         assertEquals(ResourseNotFoundException.class, e.getClass());
         assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
@@ -183,7 +189,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
 
     private void startUser(){
     userModel = new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES);
-    requestDto = new UserRequestDto(NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
+    userRequestDto = new UserRequestDto(NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
                     responseDto = new UserResponseDto(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
                     optionalUserModel = Optional.of(new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES));
 }

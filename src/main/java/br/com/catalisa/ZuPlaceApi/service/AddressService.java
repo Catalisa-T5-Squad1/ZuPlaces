@@ -1,7 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
 import br.com.catalisa.ZuPlaceApi.dto.AddressResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.CoordsResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.ZipCodeRequestDto;
 import br.com.catalisa.ZuPlaceApi.exception.CepFormatException;
 import br.com.catalisa.ZuPlaceApi.exception.CepNullException;

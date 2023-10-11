@@ -29,16 +29,16 @@ public class UserService {
         return user.orElseThrow(() -> new ResourseNotFoundException("usuário não encontrado"));
     }
 
-    public UserModel create(UserResponseDto userResponseDto) {
+    public UserResponseDto create(UserRequestDto userRequestDto) {
 
-        try {
+      //  try {
+            UserModel userModel = mapper.map(userRequestDto, UserModel.class);
+            repository.save(userModel);
 
-            UserModel userModel = mapper.map(userResponseDto, UserModel.class);
-
-            return repository.save(userModel);
-        } catch (Exception e) {
-            throw new ResourseNotFoundException("usuário não cadastrado");
-        }
+            return mapper.map(userModel, UserResponseDto.class);
+      //  } catch (Exception e) {
+      //      throw new ResourseNotFoundException("usuário não cadastrado");
+      //  }
 
     }
 
