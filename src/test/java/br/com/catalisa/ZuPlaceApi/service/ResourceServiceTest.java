@@ -30,7 +30,6 @@ public class ResourceServiceTest {
     @Mock
     private ResourceRepository resourceRepository;
 
-
     @Mock
     private ModelMapper modelMapper;
 
@@ -49,11 +48,10 @@ public class ResourceServiceTest {
         when(modelMapper.map(resource2, ResourceResponseDto.class)).thenReturn(new ResourceResponseDto("Resource 2"));
 
         List<ResourceResponseDto> resourceResponseDtoList = resourceService.findAll();
-
         assertEquals(2, resourceResponseDtoList.size());
 
         for (ResourceResponseDto resourceResponseDto : resourceResponseDtoList) {
-            assertNotNull(resourceResponseDto);
+   git add          assertNotNull(resourceResponseDto);
             assertNotNull(resourceResponseDto.getName());
         }
     }
