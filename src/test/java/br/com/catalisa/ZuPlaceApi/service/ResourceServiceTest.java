@@ -51,7 +51,7 @@ public class ResourceServiceTest {
         assertEquals(2, resourceResponseDtoList.size());
 
         for (ResourceResponseDto resourceResponseDto : resourceResponseDtoList) {
-   git add          assertNotNull(resourceResponseDto);
+            assertNotNull(resourceResponseDto);
             assertNotNull(resourceResponseDto.getName());
         }
     }
