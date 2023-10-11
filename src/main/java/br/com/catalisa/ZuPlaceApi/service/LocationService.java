@@ -1,15 +1,16 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
-import br.com.catalisa.ZuPlaceApi.dto.*;
+import br.com.catalisa.ZuPlaceApi.dto.CoordsResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseProximityLocationDto;
+import br.com.catalisa.ZuPlaceApi.dto.UserResponseDto;
 import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
 import br.com.catalisa.ZuPlaceApi.model.AddressModel;
 import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
 import br.com.catalisa.ZuPlaceApi.repository.SpaceRepository;
-import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.ArrayList;
 import java.util.Comparator;

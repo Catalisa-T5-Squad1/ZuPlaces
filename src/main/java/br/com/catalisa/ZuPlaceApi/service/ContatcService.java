@@ -2,10 +2,7 @@ package br.com.catalisa.ZuPlaceApi.service;
 
 import br.com.catalisa.ZuPlaceApi.dto.ContactRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.ContactResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.ResourceRequestDto;
-import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
 import br.com.catalisa.ZuPlaceApi.model.ContactModel;
-import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
 import br.com.catalisa.ZuPlaceApi.repository.ContatcRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
