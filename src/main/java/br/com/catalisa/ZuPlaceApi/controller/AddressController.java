@@ -58,6 +58,16 @@ public class AddressController {
         System.out.println(coordsResponseDto);
         return ResponseEntity.status(HttpStatus.OK).body(coordsResponseDto);
     }
+
+    //método para testar o método: googleMapsService.getLatitudeAndLongitudeUser() que pega a longitude e latitude do usuário.
+    @GetMapping(path = "/getLocationUser")
+    public ResponseEntity<GeoLocationUserResponseDto> getLocationUser() throws ExternalRequestFailureException {
+        GeoLocationUserResponseDto geoLocationUserResponseDto = googleMapsService.getLatitudeAndLongitudeUser();
+        System.out.println(geoLocationUserResponseDto);
+        return ResponseEntity.status(HttpStatus.OK).body(geoLocationUserResponseDto);
+    }
+
+
 //
 //    @GetMapping(path = "/calculoDistancia)
 //    public ResponseEntity<List<SpaceResponseProximityLocationDto>> createLong(@RequestBody SpaceRequestProximityLocationDto spaceRequestProximityLocationDto){

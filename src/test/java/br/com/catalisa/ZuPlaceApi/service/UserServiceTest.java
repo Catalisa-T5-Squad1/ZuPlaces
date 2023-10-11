@@ -9,9 +9,11 @@ import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,39 +28,44 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     private static Long ID = 1L;
-    private static final Integer INDEX = 0;
+    private  static final Integer INDEX = 0;
     private static final String NAME = "athos";
     private static final String EMAIL = "athossilva@gmail.com";
-    private static final String PASSWORD = "1234";
-    private static final PersonType personType = PersonType.PHISICAL_PERSON;
-    private static final String PHONE = "021996705392";
-    private static final String DOCUMENT_TYPE = "01613587401";
-    private static final List<SpaceModel> SPACES = new ArrayList<>();
-    private static final String USUARIO_NAO_ENCONTRADO = "usuário não encontrado";
-    private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
+private static final String PASSWORD = "1234";
+private static final PersonType personType = PersonType.PHISICAL_PERSON;
+private static final String PHONE = "021996705392";
+private static final  String DOCUMENT_TYPE = "01613587401";
+private  static  final  List<SpaceModel> SPACES = new ArrayList<>();
+private static final String USUARIO_NAO_ENCONTRADO = "usuário não encontrado";
+private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
 
     @InjectMocks
     private UserService service;
-
     @Mock
     private UserRepository repository;
     @Mock
     private ModelMapper mapper;
+
+    @Mock
     private UserModel userModel;
-    private UserRequestDto requestDto;
+    private UserRequestDto userRequestDto;
+
+    @Mock
     private UserResponseDto responseDto;
+
     private Optional<UserModel> optionalUserModel;
 
     @BeforeEach
-    void setUp() {
+    void  setUp(){
         MockitoAnnotations.openMocks(this);
-        startUser();
+    startUser();
     }
 
     @Test
-    void whenFindByIdThenReturnAUserInstance() {
+    void  whenFindByIdThenReturnAUserInstance(){
         when(repository.findById(anyLong())).thenReturn(optionalUserModel);
         UserModel responce = service.findById(ID);
 
@@ -74,23 +81,21 @@ public class UserServiceTest {
         assertEquals(DOCUMENT_TYPE, responce.getDocumentType());
         assertEquals(SPACES, responce.getSpaces());
     }
-
     @Test
-    void whenFindByIdThenReturnResourseNotFoundException() {
+    void   whenFindByIdThenReturnResourseNotFoundException(){
         when(repository.findById(anyLong()))
                 .thenThrow(new ResourseNotFoundException(USUARIO_NAO_ENCONTRADO));
         try {
             service.findById(ID);
 
-        } catch (Exception e) {
-            assertEquals(ResourseNotFoundException.class, e.getClass());
-            assertEquals(USUARIO_NAO_ENCONTRADO, e.getMessage());
+        } catch (Exception e){
+    assertEquals(ResourseNotFoundException.class, e.getClass());
+    assertEquals(USUARIO_NAO_ENCONTRADO, e.getMessage());
 
         }
     }
-
     @Test
-    void whenFindAllThenReturnAListOfUsers() {
+    void whenFindAllThenReturnAListOfUsers(){
         when(repository.findAll()).thenReturn(List.of(userModel));
         List<UserModel> responce = service.findAll();
         assertNotNull(responce);
@@ -107,10 +112,10 @@ public class UserServiceTest {
     }
 
     @Test
-    void whenCreateThenReturnASuccess() {
+    void whenCreateThenReturnASuccess(){
         when(repository.save(any())).thenReturn(userModel);
-        UserModel response = service.create(responseDto);
-        assertNotNull(response);
+        UserResponseDto response = service.create(userRequestDto);
+    assertNotNull(response);
 
         assertEquals(UserModel.class, response.getClass());
         assertEquals(ID, response.getId());
@@ -120,51 +125,50 @@ public class UserServiceTest {
         assertEquals(personType, response.getPersonType());
         assertEquals(PHONE, response.getPhone());
         assertEquals(DOCUMENT_TYPE, response.getDocumentType());
-        assertEquals(SPACES, response.getSpaces());
     }
 
     @Test
-    void whenCreateThenReturnResourseNotFoundException() {
+    void whenCreateThenReturnResourseNotFoundException(){
         when(repository.save(any())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
-            service.create(responseDto);
-        } catch (Exception e) {
-            assertEquals(ResourseNotFoundException.class, e.getClass());
-            assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
+            service.create(userRequestDto);
+        } catch (Exception e){
+        assertEquals(ResourseNotFoundException.class, e.getClass());
+        assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
         }
 
-    }
+}
 
     @Test
-    void whenUpdateThenReturnSucess() {
+    void whenUpdateThenReturnSucess(){
         when(repository.save(any())).thenReturn(userModel);
         when(repository.findById(anyLong())).thenReturn(optionalUserModel);
         UserModel response = service.update(ID, responseDto);
-        assertNotNull(response);
-        assertEquals(UserModel.class, response.getClass());
-        assertEquals(ID, response.getId());
-        assertEquals(NAME, response.getName());
-        assertEquals(EMAIL, response.getEmail());
-        assertEquals(PASSWORD, response.getPassword());
-        assertEquals(personType, response.getPersonType());
-        assertEquals(PHONE, response.getPhone());
-        assertEquals(DOCUMENT_TYPE, response.getDocumentType());
-        assertEquals(SPACES, response.getSpaces());
+            assertNotNull(response);
+            assertEquals(UserModel.class, response.getClass());
+            assertEquals(ID, response.getId());
+            assertEquals(NAME, response.getName());
+            assertEquals(EMAIL, response.getEmail());
+            assertEquals(PASSWORD, response.getPassword());
+            assertEquals(personType, response.getPersonType());
+            assertEquals(PHONE, response.getPhone());
+            assertEquals(DOCUMENT_TYPE, response.getDocumentType());
+            assertEquals(SPACES, response.getSpaces());
     }
 
     @Test
-    void whenUpdateThenReturnResourseNotFoundException() {
+    void whenUpdateThenReturnResourseNotFoundException(){
         when(repository.findById(anyLong())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
             service.update(ID, responseDto);
-        } catch (Exception e) {
+        } catch (Exception e){
             assertEquals(ResourseNotFoundException.class, e.getClass());
             assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
         }
     }
 
     @Test
-    void deleteSuccess() {
+    void deleteSuccess(){
         when(repository.findById(anyLong())).thenReturn(optionalUserModel);
         doNothing().when(repository).deleteById(anyLong());
         service.delete(ID);
@@ -172,21 +176,21 @@ public class UserServiceTest {
     }
 
     @Test
-    void whenDeleteByIdThenReturnResourseNotFoundExcepetion() {
+    void whenDeleteByIdThenReturnResourseNotFoundExcepetion(){
         when(repository.findById(anyLong()))
                 .thenThrow(new ResourseNotFoundException(USUARIO_NAO_ENCONTRADO));
         try {
             service.delete(ID);
-        } catch (Exception e) {
-            assertEquals(ResourseNotFoundException.class, e.getClass());
-            assertEquals(USUARIO_NAO_ENCONTRADO, e.getMessage());
+        } catch (Exception e){
+    assertEquals(ResourseNotFoundException.class, e.getClass());
+       assertEquals(USUARIO_NAO_ENCONTRADO, e.getMessage());
         }
     }
 
-    private void startUser() {
-        userModel = new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES);
-        requestDto = new UserRequestDto(NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
-        responseDto = new UserResponseDto(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
-        optionalUserModel = Optional.of(new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES));
-    }
+    private void startUser(){
+    userModel = new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES);
+    userRequestDto = new UserRequestDto(NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
+                    responseDto = new UserResponseDto(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
+                    optionalUserModel = Optional.of(new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES));
+}
 }

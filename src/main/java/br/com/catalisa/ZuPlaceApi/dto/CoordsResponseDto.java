@@ -9,5 +9,4 @@ import lombok.*;
 public class CoordsResponseDto {
     private Double latitude;
     private Double longitude;
-
 }
