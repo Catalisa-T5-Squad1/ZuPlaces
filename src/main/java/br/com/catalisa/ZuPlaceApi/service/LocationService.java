@@ -37,6 +37,7 @@ public class LocationService {
                 .collect(Collectors.toList());
 
         List<SpaceResponseProximityLocationDto> result = new ArrayList<>();
+
         for(SpaceResponseProximityLocationDto spaceDto : spaceResponseProximityLocationResultDtos) {
             try {
                 AddressModel address = spaceDto.getAddress();
@@ -69,6 +70,45 @@ public class LocationService {
         return result;
     }
 
+    public List<SpaceResponseProximityLocationDto> findSpacesByResources(Double latitudeOrigem, Double longitudeOrigem, String resource) throws ExternalRequestFailureException {
+        List<SpaceModel> spaces = spaceRepository.findAll();
+
+        List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationResultDtos = spaces.stream()
+                .map(spaceModel -> modelMapper.map(spaceModel, SpaceResponseProximityLocationDto.class))
+                .collect(Collectors.toList());
+
+        List<SpaceResponseProximityLocationDto> result = new ArrayList<>();
+        for(SpaceResponseProximityLocationDto spaceDto : spaceResponseProximityLocationResultDtos) {
+            try {
+                AddressModel address = spaceDto.getAddress();
+                UserResponseDto user = spaceDto.getUser();
+                ResourceResponseDto resourceResponseDto = spaceDto.getResource();
+
+                if (address != null) {
+                    String addresString = address.getLogradouro() + " " + address.getNumberAddress() + " " + address.getLocalidade();
+                    CoordsResponseDto coords = googleMapsService.geocodeAddress(addresString);
+
+                    double distance = googleMapsService.getDistanceBetweenCeps(
+                            latitudeOrigem, longitudeOrigem, coords.getLatitude(), coords.getLongitude());
+
+                    if (spaceDto.getResource().getName().equalsIgnoreCase(resource)){
+                        spaceDto.setName(spaceDto.getName());
+                        spaceDto.setUser(user);
+                        spaceDto.setResource(resourceResponseDto);
+                        spaceDto.setDistance(distance);
+                        address.setLatitude(coords.getLatitude());
+                        address.setLongitude(coords.getLongitude());
+                        spaceDto.setAddress(address);
+                        result.add(spaceDto);
+                    }
+                }
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+        result = sortSpacesByDistance(result);
+        return result;
+    }
 
     public static class SpaceDistanceComparator implements Comparator<SpaceResponseProximityLocationDto> {
         @Override

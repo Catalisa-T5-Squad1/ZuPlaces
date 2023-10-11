@@ -54,7 +54,6 @@ public class GoogleMapsService {
                 String ipAddress = getGeolocationDto.getIp_address();
                 return new GeoLocationUserResponseDto(latitude, longitude,ipAddress);
             }
-
             return new GeoLocationUserResponseDto(0.0, 0.0, null);
         }catch (IOException | InterruptedException e){
             throw new ExternalRequestFailureException("Falhou" + e);
