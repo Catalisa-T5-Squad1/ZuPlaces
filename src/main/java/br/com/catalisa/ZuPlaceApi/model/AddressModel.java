@@ -43,6 +43,9 @@ public class AddressModel {
     @Schema(description = "Estado", example = "PR")
     private String uf;
 
+    private Double latitude;
+    private Double longitude;
+
     @JsonIgnore
     @OneToOne(mappedBy = "address")
     private SpaceModel space;

@@ -38,6 +38,9 @@ public class AddressService {
     private AddressRepository addressRepository;
 
     @Autowired
+    GoogleMapsService googleMapsService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     public AddressResponseDto createAddres(ZipCodeRequestDto cepString) {
@@ -74,7 +77,6 @@ public class AddressService {
             AddressModel addressModelSave = modelMapper.map(addressResponseDto, AddressModel.class);
 
             addressRepository.save(addressModelSave);
-
             logger.info("CEP {} encontrado com sucesso", cepString.getCep());
 
             return addressResponseDto;

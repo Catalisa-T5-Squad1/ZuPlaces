@@ -1,13 +1,20 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
-import br.com.catalisa.ZuPlaceApi.dto.CoordsResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.GoogleDistanceMatrixResponseDto;
-import br.com.catalisa.ZuPlaceApi.dto.GoogleGeocodeResponseDto;
+import br.com.catalisa.ZuPlaceApi.dto.*;
+import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+
 
 @Service
 public class GoogleMapsService {
@@ -16,48 +23,109 @@ public class GoogleMapsService {
     @Value("${google.maps.api.key}")
     private String apiKey;
 
-    private final RestTemplate restTemplate;
+    @Autowired
+    @Value("${abstractapi.api.key}")
+    private String abstractApiKey;
 
-    public GoogleMapsService() {
-        this.restTemplate = new RestTemplate();
-    }
+    private static final Gson gson = new Gson();
 
 
-    public CoordsResponseDto geocodeAddress(String address) {
-        String geocodingBaseUrl = "https://maps.googleapis.com/maps/api/geocode/json";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(geocodingBaseUrl)
-                .queryParam("address", address)
-                .queryParam("key", apiKey);
+    public GeoLocationUserResponseDto getLatitudeAndLongitudeUser() throws ExternalRequestFailureException {
+        try {
+            String baseURL = "http://ipgeolocation.abstractapi.com/v1/";
+            String url = baseURL
+                    + "?api_key=" + abstractApiKey;
 
-        GoogleGeocodeResponseDto response = restTemplate.getForObject(builder.toUriString(), GoogleGeocodeResponseDto.class);
+            HttpClient httpClient = HttpClient.newHttpClient();
 
-        if (response != null && response.getResults() != null && response.getResults().length > 0) {
-            GoogleGeocodeResponseDto.Result result = response.getResults()[0];
-            double latitude = result.getGeometry().getLocation().getLat();
-            double longitude = result.getGeometry().getLocation().getLng();
-            return new CoordsResponseDto(latitude, longitude);
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            GetGeolocationDto getGeolocationDto = gson.fromJson(httpResponse.body(), GetGeolocationDto.class);
+
+            if (getGeolocationDto.getLatitude() < 0 && getGeolocationDto.getLongitude() < 0) {
+                double latitude = getGeolocationDto.getLatitude();
+                double longitude = getGeolocationDto.getLongitude();
+                String ipAddress = getGeolocationDto.getIp_address();
+                return new GeoLocationUserResponseDto(latitude, longitude,ipAddress);
+            }
+            return new GeoLocationUserResponseDto(0.0, 0.0, null);
+        }catch (IOException | InterruptedException e){
+            throw new ExternalRequestFailureException("Falhou" + e);
         }
-        return null;
     }
 
-    public double calculateDistance(Double originLat, Double originLng, Double destinationLat, Double destinationLng) {
-        String distanceMatrixBaseUrl = "https://maps.googleapis.com/maps/api/distancematrix/json";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(distanceMatrixBaseUrl)
-                .queryParam("origins", originLat + "," + originLng)
-                .queryParam("destinations", destinationLat + "," + destinationLng)
-                .queryParam("key", apiKey);
 
-        GoogleDistanceMatrixResponseDto response = restTemplate.getForObject(builder.toUriString(), GoogleDistanceMatrixResponseDto.class);
+    public CoordsResponseDto geocodeAddress(String address) throws ExternalRequestFailureException {
+        try {
+            String encodedAddress = URLEncoder.encode(address, StandardCharsets.UTF_8);
+            String baseURL = "https://maps.googleapis.com/maps/api/geocode/json";
+            String url = baseURL
+                    + "?address=" + encodedAddress
+                    + "&key=" + apiKey;
 
-        if (response != null && response.getRows() != null && response.getRows().length > 0) {
-            GoogleDistanceMatrixResponseDto.Row row = response.getRows()[0];
-            if (row.getElements() != null && row.getElements().length > 0) {
-                GoogleDistanceMatrixResponseDto.Element element = row.getElements()[0];
-                if (element.getStatus().equals("OK")) {
-                    return element.getDistance().getValue() / 1000.0;
+            HttpClient httpClient = HttpClient.newHttpClient();
+
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+           GoogleGeocodeResponseDto googleGeocodeResponseDto = gson.fromJson(httpResponse.body(), GoogleGeocodeResponseDto.class);
+
+            if (googleGeocodeResponseDto.getResults() != null && googleGeocodeResponseDto.getResults() != null && googleGeocodeResponseDto.getResults().length > 0) {
+                GoogleGeocodeResponseDto.Result result = googleGeocodeResponseDto.getResults()[0];
+                double latitude = result.getGeometry().getLocation().getLat();
+                double longitude = result.getGeometry().getLocation().getLng();
+                return new CoordsResponseDto(latitude, longitude);
+            }
+
+            return new CoordsResponseDto(0.0, 0.0);
+        }catch (IOException | InterruptedException e){
+            throw new ExternalRequestFailureException("Falhou" + e);
+        }
+    }
+
+    public double getDistanceBetweenCeps(Double originLat, Double originLng, Double destinationLat, Double destinationLng) {
+        try {
+            String url = "https://maps.googleapis.com/maps/api/distancematrix/json"
+                    + "?origins=" + originLat + "," + originLng
+                    + "&destinations=" + destinationLat + "," + destinationLng
+                    + "&key=" + apiKey;
+
+            HttpClient httpClient = HttpClient.newHttpClient();
+
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(url))
+                    .build();
+
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            GoogleDistanceMatrixResponseDto googleDistanceMatrixResponseDto = gson.fromJson(httpResponse.body(), GoogleDistanceMatrixResponseDto.class);
+
+            if (googleDistanceMatrixResponseDto != null && googleDistanceMatrixResponseDto.getRows() != null && googleDistanceMatrixResponseDto.getRows().length > 0) {
+                GoogleDistanceMatrixResponseDto.Row row = googleDistanceMatrixResponseDto.getRows()[0];
+                if (row.getElements() != null && row.getElements().length > 0) {
+                    GoogleDistanceMatrixResponseDto.Element element = row.getElements()[0];
+                    GoogleDistanceMatrixResponseDto.Distance distance = element.getDistance();
+                    if (distance != null) {
+                        double distanceValue = distance.getValue();
+                        System.out.println("Valor de 'value': " + distanceValue);
+                        return distanceValue;
+                    }
                 }
             }
+            return 0;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
-        return Double.MAX_VALUE;
     }
 }

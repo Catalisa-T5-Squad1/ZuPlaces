@@ -1,13 +1,12 @@
 package br.com.catalisa.ZuPlaceApi.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import br.com.catalisa.ZuPlaceApi.model.AddressModel;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpaceResponseDto {
+public class SpaceResponseProximityLocationDto {
 
     private String name;
 
@@ -15,7 +14,10 @@ public class SpaceResponseDto {
 
     private ResourceResponseDto resource;
 
-    private AddressResponseDto address;
+    private AddressModel address;
 
     private double distance;
+
+
+
 }

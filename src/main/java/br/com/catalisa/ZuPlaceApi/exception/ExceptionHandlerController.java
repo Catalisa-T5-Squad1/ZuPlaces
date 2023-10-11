@@ -14,4 +14,9 @@ public class ExceptionHandlerController {
         ExceptionResponse errorDetails = new ExceptionResponse(LocalDate.now(),ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(ResourseNotFoundException.class)
+    public ResponseEntity<Object> HandleObjectNotFoundException(Exception exception){
+        ExceptionResponse errorDetails = new ExceptionResponse(LocalDate.now(), exception.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
 }
