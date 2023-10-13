@@ -106,11 +106,14 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
 
     @Test
     void whenCreateThenReturnASuccess(){
+
         when(repository.save(any())).thenReturn(userModel);
-        UserModel response = service.create(responseDto);
+
+        when(mapper.map(any(), any())).thenReturn(responseDto);
+         UserResponseDto response = service.create(requestDto);
     assertNotNull(response);
 
-        assertEquals(UserModel.class, response.getClass());
+        assertEquals(UserResponseDto.class, response.getClass());
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
@@ -118,20 +121,20 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
         assertEquals(personType, response.getPersonType());
         assertEquals(PHONE, response.getPhone());
         assertEquals(DOCUMENT_TYPE, response.getDocumentType());
-        assertEquals(SPACES, response.getSpaces());
+
     }
 
     @Test
-    void whenCreateThenReturnResourseNotFoundException(){
+    void whenCreateThenReturnResourseNotFoundException() {
         when(repository.save(any())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
-            service.create(responseDto);
-        } catch (Exception e){
-        assertEquals(ResourseNotFoundException.class, e.getClass());
-        assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
+            service.create(null);
+        } catch (Exception e) {
+            assertEquals(ResourseNotFoundException.class, e.getClass());
+            assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
         }
+    }
 
-}
 
     @Test
     void whenUpdateThenReturnSucess(){

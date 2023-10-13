@@ -1,6 +1,7 @@
 package br.com.catalisa.ZuPlaceApi.validation;
 
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import org.hibernate.validator.spi.group.DefaultGroupSequenceProvider;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class UserGroupSequenceProvider implements DefaultGroupSequenceProvider<U
        if (user != null && user.getPersonType() != null){
            switch (user.getPersonType()){
                case PHISICAL_PERSON:
-                   groups.add(CpfGroup.class);
+           groups.add(CpfGroup.class);
                            break;
                case LEGAL_PERSON:
 groups.add(CnpjGroup.class);

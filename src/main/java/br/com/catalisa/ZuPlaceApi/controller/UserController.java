@@ -46,11 +46,11 @@ public class UserController {
 
     @Operation(summary = " : Cadastra um novo usuario", method = "POST")
 
-    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserResponseDto responseDto){
-UserModel response = service.create(responseDto);
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto requestDto){
+        UserResponseDto responseDto = service.create(requestDto);
 
 
-        return new  ResponseEntity<>(mapper.map(response, UserResponseDto.class), HttpStatus.CREATED);
+        return new  ResponseEntity<> (responseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = ID)

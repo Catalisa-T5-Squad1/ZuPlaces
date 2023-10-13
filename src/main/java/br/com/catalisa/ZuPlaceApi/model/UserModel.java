@@ -1,6 +1,8 @@
 package br.com.catalisa.ZuPlaceApi.model;
 
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
+import br.com.catalisa.ZuPlaceApi.validation.CnpjGroup;
+import br.com.catalisa.ZuPlaceApi.validation.CpfGroup;
 import br.com.catalisa.ZuPlaceApi.validation.UserGroupSequenceProvider;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,10 +37,11 @@ public class UserModel {
     @Enumerated(EnumType.STRING)
     private PersonType personType;
 
+
     private String phone;
 
-    @CPF(message = "cpf inválido")
-    @CNPJ(message = "CNPJ inválido")
+    @CPF
+    @CNPJ
     private String documentType;
 
     @OneToMany(mappedBy = "user")
