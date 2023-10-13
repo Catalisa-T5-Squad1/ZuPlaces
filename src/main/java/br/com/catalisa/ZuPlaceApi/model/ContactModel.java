@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "Contato")
 public class ContactModel{
