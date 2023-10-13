@@ -52,7 +52,86 @@ public class ContactServiceTest {
         assertEquals(2, contactResponseDtoList.size());
     }
 
+    @Test
+    public void testFindContactById() {
+        Long contactId = 1L;
 
+        ContactModel contactModel = new ContactModel();
+        contactModel.setId(contactId);
+        contactModel.setName("John Doe");
+        contactModel.setEmail("john.doe@example.com");
+
+        when(contactRepository.findById(contactId)).thenReturn(Optional.of(contactModel));
+
+        ContactResponseDto responseDto = new ContactResponseDto();
+        responseDto.setName("John Doe");
+        responseDto.setEmail("john.doe@example.com");
+
+        when(modelMapper.map(contactModel, ContactResponseDto.class)).thenReturn(responseDto);
+
+        ContactResponseDto result = contactService.findById(contactId);
+
+        assertEquals("John Doe", result.getName());
+        assertEquals("john.doe@example.com", result.getEmail());
+    }
+
+    @Test
+    public void testCreateContact() {
+        ContactRequestDto requestDto = new ContactRequestDto();
+        requestDto.setName("John Doe");
+        requestDto.setEmail("john.doe@example.com");
+
+        ContactModel contactModel = new ContactModel();
+        contactModel.setId(1L);
+        contactModel.setName("John Doe");
+        contactModel.setEmail("john.doe@example.com");
+
+        when(modelMapper.map(requestDto, ContactModel.class)).thenReturn(contactModel);
+
+        when(contactRepository.save(contactModel)).thenReturn(contactModel);
+
+        ContactResponseDto responseDto = new ContactResponseDto();
+        responseDto.setName("John Doe");
+        responseDto.setEmail("john.doe@example.com");
+
+        when(modelMapper.map(contactModel, ContactResponseDto.class)).thenReturn(responseDto);
+
+        ContactResponseDto result = contactService.create(requestDto);
+
+        assertEquals("John Doe", result.getName());
+        assertEquals("john.doe@example.com", result.getEmail());
+    }
+
+    @Test
+    public void testUpdateContact() {
+        Long contactId = 1L;
+
+        ContactRequestDto updatedDto = new ContactRequestDto();
+        updatedDto.setName("Updated Name");
+        updatedDto.setEmail("updated.email@example.com");
+
+        ContactModel contactModel = new ContactModel();
+        contactModel.setId(contactId);
+        contactModel.setName("Original Name");
+        contactModel.setEmail("original.email@example.com");
+
+        when(contactRepository.findById(contactId)).thenReturn(Optional.of(contactModel));
+
+        when(modelMapper.map(updatedDto, ContactModel.class)).thenReturn(contactModel);
+
+        when(contactRepository.save(contactModel)).thenReturn(contactModel);
+
+        ContactResponseDto responseDto = new ContactResponseDto();
+        responseDto.setName("Updated Name");
+        responseDto.setEmail("updated.email@example.com");
+
+        when(modelMapper.map(contactModel, ContactResponseDto.class)).thenReturn(responseDto);
+
+        ContactResponseDto result = contactService.update(contactId, updatedDto);
+
+        assertEquals("Updated Name", result.getName());
+        assertEquals("updated.email@example.com", result.getEmail());
+    }
 
     @Test
     public void testDeleteContact() {
