@@ -9,12 +9,11 @@ import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.net.ResponseCache;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +55,8 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
         MockitoAnnotations.openMocks(this);
     startUser();
     }
+
+
 
     @Test
     void  whenFindByIdThenReturnAUserInstance(){
@@ -106,10 +107,8 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
 
     @Test
     void whenCreateThenReturnASuccess(){
+        when(repository.save(any(UserModel.class))).thenReturn(userModel);
 
-        when(repository.save(any())).thenReturn(userModel);
-
-        when(mapper.map(any(), any())).thenReturn(responseDto);
          UserResponseDto response = service.create(requestDto);
     assertNotNull(response);
 
@@ -128,7 +127,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     void whenCreateThenReturnResourseNotFoundException() {
         when(repository.save(any())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
-            service.create(null);
+            service.create(requestDto);
         } catch (Exception e) {
             assertEquals(ResourseNotFoundException.class, e.getClass());
             assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());

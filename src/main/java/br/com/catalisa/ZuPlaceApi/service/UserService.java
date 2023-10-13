@@ -42,6 +42,7 @@ public class UserService {
 
             return responseDto;
         } catch (Exception e){
+            System.out.println("erro ao criar usuário: " + e.getMessage());
             throw new ResourseNotFoundException("usuário não cadastrado");
         }
     }

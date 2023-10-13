@@ -31,12 +31,11 @@ public class UserModel {
     @Email(message = "Email inválido")
     @NotEmpty(message = "Email não pode ser vazio")
     private String email;
-
+@NotEmpty(message = "a senha não pode estar vazia")
     private String password;
 
     @Enumerated(EnumType.STRING)
     private PersonType personType;
-
 
     private String phone;
 
