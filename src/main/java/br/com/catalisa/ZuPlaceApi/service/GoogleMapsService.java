@@ -60,7 +60,7 @@ public class GoogleMapsService {
     }
 
 
-    public CoordsResponseDto geocodeAddress(String address) throws ExternalRequestFailureException {
+    public CoordsResponseDto geocodeAddress(String address) {
         try {
             String encodedAddress = URLEncoder.encode(address, StandardCharsets.UTF_8);
             String baseURL = "https://maps.googleapis.com/maps/api/geocode/json";
@@ -88,7 +88,7 @@ public class GoogleMapsService {
 
             return new CoordsResponseDto(0.0, 0.0);
         }catch (IOException | InterruptedException e){
-            throw new ExternalRequestFailureException("Falhou" + e);
+            throw new ExternalRequestFailureException("Falhou: " + e.getMessage());
         }
     }
 

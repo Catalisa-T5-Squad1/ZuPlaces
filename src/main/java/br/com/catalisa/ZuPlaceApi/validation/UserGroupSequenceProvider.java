@@ -13,7 +13,7 @@ public class UserGroupSequenceProvider implements DefaultGroupSequenceProvider<U
        groups.add(UserModel.class);
        if (user != null && user.getPersonType() != null){
            switch (user.getPersonType()){
-               case PHISICAL_PERSON:
+               case PHYSICAL_PERSON:
                    groups.add(CpfGroup.class);
                            break;
                case LEGAL_PERSON:

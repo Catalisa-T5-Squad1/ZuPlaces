@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/resources")
 @Tag(name = "Feature - Resources")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class ResourceController {
 
     @Autowired

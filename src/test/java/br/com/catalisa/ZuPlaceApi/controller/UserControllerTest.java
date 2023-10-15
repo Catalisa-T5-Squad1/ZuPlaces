@@ -29,7 +29,7 @@ public class UserControllerTest {
     private static final String NAME = "athos";
     private static final String EMAIL = "athossilva@gmail.com";
     private static final String PASSWORD = "1234";
-    private static final PersonType personType = PersonType.PHISICAL_PERSON;
+    private static final PersonType personType = PersonType.PHYSICAL_PERSON;
     private static final String PHONE = "021996705392";
     private static final  String DOCUMENT_TYPE = "01613587401";
     private  static  final  List<SpaceModel> SPACES = new ArrayList<>();

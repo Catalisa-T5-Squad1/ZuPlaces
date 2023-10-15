@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Tag(name = "User Feature")
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class UserController {
     public   static  final String ID = "/{id}";
     @Autowired
