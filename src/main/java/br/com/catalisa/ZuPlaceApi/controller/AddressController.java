@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/address", produces = {"application/json"})
 @Tag(name = "Feature - Address")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class AddressController {
 
     private static final Logger logger = LoggerFactory.getLogger(AddressController.class);
@@ -63,7 +64,12 @@ public class AddressController {
     @GetMapping(path = "/getLocationUser")
     public ResponseEntity<GeoLocationUserResponseDto> getLocationUser() throws ExternalRequestFailureException {
         GeoLocationUserResponseDto geoLocationUserResponseDto = googleMapsService.getLatitudeAndLongitudeUser();
-        System.out.println(geoLocationUserResponseDto);
+        System.out.println("Requisição foi feita ->  "
+                + "Latitude: "
+                + geoLocationUserResponseDto.getLatitude()
+                + " "
+                + "Longitude: "
+                + geoLocationUserResponseDto.getLongitude());
         return ResponseEntity.status(HttpStatus.OK).body(geoLocationUserResponseDto);
     }
 
@@ -79,13 +85,13 @@ public class AddressController {
 //        return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
 //    }
 
-    @GetMapping(path = "/testeDistanciaProxima")
+    @PostMapping(path = "/testeDistanciaProxima")
     public ResponseEntity<List<SpaceResponseProximityLocationDto>> createLong(@RequestBody SpaceRequestProximityLocationDto spaceRequestProximityLocationDto) throws ExternalRequestFailureException {
         List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationDto = locationService.findSpacesByAddressProximity(
                 spaceRequestProximityLocationDto.getLatitudeOrigem(),
                 spaceRequestProximityLocationDto.getLongitudeOrigem(),
                 spaceRequestProximityLocationDto.getMaxDistance());
-        System.out.println(spaceResponseProximityLocationDto);
+        System.out.println("Requisição da lista de spaces feita: " + spaceResponseProximityLocationDto);
         return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
     }
 }

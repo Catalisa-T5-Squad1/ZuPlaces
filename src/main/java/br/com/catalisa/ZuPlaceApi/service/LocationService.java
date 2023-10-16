@@ -30,7 +30,7 @@ public class LocationService {
     ModelMapper modelMapper;
 
 
-    public List<SpaceResponseProximityLocationDto> findSpacesByAddressProximity(Double latitudeOrigem, Double longitudeOrigem, Double maxDistance) throws ExternalRequestFailureException {
+    public List<SpaceResponseProximityLocationDto> findSpacesByAddressProximity(Double latitudeOrigem, Double longitudeOrigem, Double maxDistance) {
         List<SpaceModel> spaces = spaceRepository.findAll();
 
         List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationResultDtos = spaces.stream()
@@ -40,31 +40,28 @@ public class LocationService {
         List<SpaceResponseProximityLocationDto> result = new ArrayList<>();
 
         for(SpaceResponseProximityLocationDto spaceDto : spaceResponseProximityLocationResultDtos) {
-            try {
-                AddressModel address = spaceDto.getAddress();
-                UserResponseDto user = spaceDto.getUser();
-                ResourceResponseDto resource = spaceDto.getResource();
 
-                if (address != null) {
-                    String addresString = address.getLogradouro() + " " + address.getNumberAddress() + " " + address.getLocalidade();
-                    CoordsResponseDto coords = googleMapsService.geocodeAddress(addresString);
+            AddressModel address = spaceDto.getAddress();
+            UserResponseDto user = spaceDto.getUser();
+            ResourceResponseDto resource = spaceDto.getResource();
 
-                    double distance = googleMapsService.getDistanceBetweenCeps(
-                            latitudeOrigem, longitudeOrigem, coords.getLatitude(), coords.getLongitude());
+            if (address != null) {
+                String addresString = address.getLogradouro() + " " + address.getNumberAddress() + " " + address.getLocalidade();
+                CoordsResponseDto coords = googleMapsService.geocodeAddress(addresString);
 
-                    if (distance <= maxDistance) {
-                        spaceDto.setName(spaceDto.getName());
-                        spaceDto.setUser(user);
-                        spaceDto.setResource(resource);
-                        spaceDto.setDistance(distance);
-                        address.setLatitude(coords.getLatitude());
-                        address.setLongitude(coords.getLongitude());
-                        spaceDto.setAddress(address);
-                        result.add(spaceDto);
-                    }
+                double distance = googleMapsService.getDistanceBetweenCeps(
+                        latitudeOrigem, longitudeOrigem, coords.getLatitude(), coords.getLongitude());
+
+                if (distance <= maxDistance) {
+                    spaceDto.setName(spaceDto.getName());
+                    spaceDto.setUser(user);
+                    spaceDto.setResource(resource);
+                    spaceDto.setDistance(distance);
+                    address.setLatitude(coords.getLatitude());
+                    address.setLongitude(coords.getLongitude());
+                    spaceDto.setAddress(address);
+                    result.add(spaceDto);
                 }
-            } catch (Exception e) {
-                throw e;
             }
         }
         result = sortSpacesByDistance(result);
