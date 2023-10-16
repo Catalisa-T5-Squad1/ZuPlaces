@@ -1,13 +1,12 @@
 package br.com.catalisa.ZuPlaceApi.model;
 
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
-import br.com.catalisa.ZuPlaceApi.validation.UserGroupSequenceProvider;
+import br.com.catalisa.ZuPlaceApi.validation.CpfOrCnpj;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
-import org.hibernate.validator.group.GroupSequenceProvider;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-@GroupSequenceProvider(UserGroupSequenceProvider.class)
+
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,16 +28,14 @@ public class UserModel {
     @Email(message = "Email inválido")
     @NotEmpty(message = "Email não pode ser vazio")
     private String email;
-
+    @NotEmpty(message = "a senha não pode estar vazia")
     private String password;
 
     @Enumerated(EnumType.STRING)
     private PersonType personType;
 
     private String phone;
-
-    //@CPF(message = "CPF inválido")
-    //@CNPJ(message = "CNPJ inválido")
+@CpfOrCnpj
     private String documentType;
 
     @OneToMany(mappedBy = "user")
