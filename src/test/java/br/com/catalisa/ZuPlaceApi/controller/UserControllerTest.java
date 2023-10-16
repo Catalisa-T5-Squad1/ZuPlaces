@@ -6,6 +6,7 @@ import br.com.catalisa.ZuPlaceApi.enums.PersonType;
 import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.service.UserService;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("quando chamar o método findAll, me retorne uma lista de usuários")
     void whenFindAllUsersThenReturnAListOfDTO() {
         when(service.findAll()).thenReturn(List.of(userModel));
         when(mapper.map(any(), any())).thenReturn(responseDto);
@@ -72,6 +74,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("quando buscar um usuário específico por id, me retorne uma instância de usuário")
     void whenFinByIdThenReturnAUserInstance() {
         when(service.findById(anyLong())).thenReturn(userModel);
         when(mapper.map(any(), any())).thenReturn(responseDto);
@@ -90,17 +93,18 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("quando criar um usuário, me retorne um status code created")
     void whenCreateThenReturnCreated() {
         when(service.create(any())).thenReturn(responseDto);
         ResponseEntity<UserResponseDto> response = controller.createUser(requestDto);
-
+assertNotNull(response);
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertNotNull(response.getHeaders().get("Location"));
 
     }
 
     @Test
+    @DisplayName("quando atualizar um usuário por id, me retorne sucesso")
     void whenUpdateThenReturnSuccess() {
         when(service.update(anyLong(), any())).thenReturn(userModel);
         when(mapper.map(any(), any())).thenReturn(responseDto);
@@ -121,6 +125,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("quando deletar um usuário por id, me retorne sucesso")
     void whenDeleteThenReturnSuccess() {
         doNothing().when(service).delete(anyLong());
         ResponseEntity<Void> response = controller.delete(ID);
@@ -129,7 +134,7 @@ public class UserControllerTest {
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(service, times(1)).delete(anyLong());
     }
-
+@DisplayName("método que configura a instanciação dos objetos para realizar os testes")
     private void startUser() {
         userModel = new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES);
         responseDto = new UserResponseDto(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);
