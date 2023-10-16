@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/spaces", produces = {"application/json"})
 @Tag(name = "Feature - Spaces")
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 public class SpaceController {
 
     @Autowired
