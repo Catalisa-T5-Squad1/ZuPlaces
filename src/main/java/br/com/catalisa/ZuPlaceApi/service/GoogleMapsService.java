@@ -3,6 +3,7 @@ package br.com.catalisa.ZuPlaceApi.service;
 import br.com.catalisa.ZuPlaceApi.dto.*;
 import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
 import com.google.gson.Gson;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
-
 @Service
 public class GoogleMapsService {
-
+   @Getter
     @Autowired
     @Value("${google.maps.api.key}")
     private String apiKey;

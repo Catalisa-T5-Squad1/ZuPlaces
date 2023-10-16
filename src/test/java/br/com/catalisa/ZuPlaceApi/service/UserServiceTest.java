@@ -1,5 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
+import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.UserRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.UserResponseDto;
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
@@ -8,14 +9,12 @@ import br.com.catalisa.ZuPlaceApi.model.SpaceModel;
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     private static Long ID = 1L;
     private  static final Integer INDEX = 0;
@@ -64,7 +62,10 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     startUser();
     }
 
+
+
     @Test
+    @DisplayName("quando buscar um usuário por id, retorne uma instância de usuário.")
     void  whenFindByIdThenReturnAUserInstance(){
         when(repository.findById(anyLong())).thenReturn(optionalUserModel);
         UserModel responce = service.findById(ID);
@@ -82,6 +83,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
         assertEquals(SPACES, responce.getSpaces());
     }
     @Test
+    @DisplayName("quando buscar por um id de usuário e não encontrar lance uma exceção")
     void   whenFindByIdThenReturnResourseNotFoundException(){
         when(repository.findById(anyLong()))
                 .thenThrow(new ResourseNotFoundException(USUARIO_NAO_ENCONTRADO));
@@ -95,6 +97,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
         }
     }
     @Test
+    @DisplayName("quando buscar por usuários então me retorne uma lista de usuários")
     void whenFindAllThenReturnAListOfUsers(){
         when(repository.findAll()).thenReturn(List.of(userModel));
         List<UserModel> responce = service.findAll();
@@ -112,12 +115,16 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     }
 
     @Test
+    @DisplayName("quando cadastrar um uduário então retorne sucesso")
     void whenCreateThenReturnASuccess(){
-        when(repository.save(any())).thenReturn(userModel);
-        UserResponseDto response = service.create(userRequestDto);
+        when(mapper.map(userRequestDto, UserModel.class)).thenReturn(userModel);
+        when(repository.save(any(UserModel.class))).thenReturn(userModel);
+        when(mapper.map(userModel, UserResponseDto.class)).thenReturn(responseDto);
+
+         UserResponseDto response = service.create(userRequestDto);
     assertNotNull(response);
 
-        assertEquals(UserModel.class, response.getClass());
+        assertEquals(UserResponseDto.class, response.getClass());
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
@@ -125,21 +132,24 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
         assertEquals(personType, response.getPersonType());
         assertEquals(PHONE, response.getPhone());
         assertEquals(DOCUMENT_TYPE, response.getDocumentType());
+
     }
 
     @Test
-    void whenCreateThenReturnResourseNotFoundException(){
+    @DisplayName("Quando cadastrar um usuário e não for encontrado então retorne uma exceção")
+    void whenCreateThenReturnResourseNotFoundException() {
         when(repository.save(any())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
             service.create(userRequestDto);
-        } catch (Exception e){
-        assertEquals(ResourseNotFoundException.class, e.getClass());
-        assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
+        } catch (Exception e) {
+            assertEquals(ResourseNotFoundException.class, e.getClass());
+            assertEquals(USUARIO_NAO_CADASTRADO, e.getMessage());
         }
+    }
 
-}
 
     @Test
+    @DisplayName("Quando atualizar então retorne sucesso")
     void whenUpdateThenReturnSucess(){
         when(repository.save(any())).thenReturn(userModel);
         when(repository.findById(anyLong())).thenReturn(optionalUserModel);
@@ -157,6 +167,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     }
 
     @Test
+    @DisplayName("quando atualizar um id que não existe, retorne uma exceção")
     void whenUpdateThenReturnResourseNotFoundException(){
         when(repository.findById(anyLong())).thenThrow(new ResourseNotFoundException(USUARIO_NAO_CADASTRADO));
         try {
@@ -168,6 +179,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     }
 
     @Test
+    @DisplayName("quando deletar um usuário me retorna sucesso")
     void deleteSuccess(){
         when(repository.findById(anyLong())).thenReturn(optionalUserModel);
         doNothing().when(repository).deleteById(anyLong());
@@ -176,6 +188,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
     }
 
     @Test
+    @DisplayName("quando deletar um usuário que não existe então me retorne uma exceção")
     void whenDeleteByIdThenReturnResourseNotFoundExcepetion(){
         when(repository.findById(anyLong()))
                 .thenThrow(new ResourseNotFoundException(USUARIO_NAO_ENCONTRADO));
@@ -186,7 +199,7 @@ private static final String USUARIO_NAO_CADASTRADO = "usuário não cadastrado";
        assertEquals(USUARIO_NAO_ENCONTRADO, e.getMessage());
         }
     }
-
+@DisplayName("método que configura a instanciação de objetos para a realização dos testes")
     private void startUser(){
     userModel = new UserModel(ID, NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE, SPACES);
     userRequestDto = new UserRequestDto(NAME, EMAIL, PASSWORD, personType, PHONE, DOCUMENT_TYPE);

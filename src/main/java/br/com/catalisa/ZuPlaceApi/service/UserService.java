@@ -30,16 +30,21 @@ public class UserService {
     }
 
     public UserResponseDto create(UserRequestDto userRequestDto) {
+        try {
 
-      //  try {
+
             UserModel userModel = mapper.map(userRequestDto, UserModel.class);
+
+
             repository.save(userModel);
 
-            return mapper.map(userModel, UserResponseDto.class);
-      //  } catch (Exception e) {
-      //      throw new ResourseNotFoundException("usuário não cadastrado");
-      //  }
+            UserResponseDto responseDto = mapper.map(userModel, UserResponseDto.class);
 
+            return responseDto;
+        } catch (Exception e){
+            System.out.println("erro ao criar usuário: " + e.getMessage());
+            throw new ResourseNotFoundException("usuário não cadastrado");
+        }
     }
 
     public UserModel update(Long id, UserResponseDto userResponseDto) {
