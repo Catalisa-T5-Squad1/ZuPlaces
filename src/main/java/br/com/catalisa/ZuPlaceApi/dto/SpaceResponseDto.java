@@ -17,5 +17,9 @@ public class SpaceResponseDto {
 
     private AddressResponseDto address;
 
+    private String description;
+
     private double distance;
+
+
 }

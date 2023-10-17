@@ -16,6 +16,8 @@ public class SpaceResponseProximityLocationDto {
 
     private AddressModel address;
 
+    private String description;
+
     private double distance;
 
 
