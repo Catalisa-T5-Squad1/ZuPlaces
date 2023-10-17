@@ -1,6 +1,7 @@
 package br.com.catalisa.ZuPlaceApi.dto;
 
 import br.com.catalisa.ZuPlaceApi.enums.PersonType;
+import br.com.catalisa.ZuPlaceApi.validation.CpfOrCnpj;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
