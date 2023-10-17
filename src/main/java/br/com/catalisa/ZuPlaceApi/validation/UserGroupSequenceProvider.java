@@ -14,10 +14,10 @@ public class UserGroupSequenceProvider implements DefaultGroupSequenceProvider<U
        if (user != null && user.getPersonType() != null){
            switch (user.getPersonType()){
                case PHYSICAL_PERSON:
-                   groups.add(CpfGroup.class);
+                   groups.add(CpfOrCnpj.class);
                            break;
                case LEGAL_PERSON:
-groups.add(CnpjGroup.class);
+groups.add(CpfOrCnpj.class);
 break;
            }
        }

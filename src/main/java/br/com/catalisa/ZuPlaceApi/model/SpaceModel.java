@@ -33,6 +33,8 @@ public class SpaceModel {
     @Schema(description = "Endereço associado ao espaço")
     private AddressModel address;
 
+    private String description;
+
     private double distance;
 
 
