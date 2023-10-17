@@ -21,4 +21,7 @@ public class SpaceRequestDto {
 
     @JsonProperty("endereco")
     private ZipCodeRequestDto address;
+
+    @JsonProperty("descricao_espaco")
+    private String description;
 }

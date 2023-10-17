@@ -41,7 +41,7 @@ public class SpaceController {
         return new ResponseEntity<>(spaceResponseDto, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}") // falar para o rick que falta o / no put dele
+    @PutMapping("/{id}")
     @Operation(summary = " : Altera um space cadastrado por ID", method = "PUT")
     public ResponseEntity<SpaceResponseDto> alterSpace(@PathVariable Long id, @RequestBody SpaceRequestDto spaceRequestDto){
         SpaceResponseDto spaceResponseDtoResponseDto = spaceService.update(id, spaceRequestDto);
