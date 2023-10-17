@@ -45,7 +45,7 @@ public class ResourceController {
     @PutMapping("/{id}")
     @Operation(summary = " : Altera um recurso cadastrado por ID", method = "PUT")
     public ResponseEntity<ResourceResponseDto> alterResource(@PathVariable Long id,
-            @RequestBody ResourceRequestDto resourceRequestDto){
+                                                             @RequestBody ResourceRequestDto resourceRequestDto){
         ResourceResponseDto resourceResponseDto = resourceService.update(id, resourceRequestDto);
         return new ResponseEntity<>(resourceResponseDto, HttpStatus.OK);
     }

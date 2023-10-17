@@ -33,9 +33,11 @@ public class SpaceModel {
     @Schema(description = "Endereço associado ao espaço")
     private AddressModel address;
 
+    @Schema(description = "Horário de funcionamento", example = "Segunda a Sexta às 08:00 até as 18:00")
+    private String openingHours;
+
+    @Schema(description = "Descrição do espaço", example = "Quantos banheiros, Quantos pontos de wifi, como acessar o wifi.")
     private String description;
 
     private double distance;
-
-
 }

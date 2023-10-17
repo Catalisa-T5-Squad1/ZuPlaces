@@ -44,7 +44,7 @@ public class ContactController {
     @PutMapping("{id}")
     @Operation(summary = " : Altera um contato cadastrado por ID", method = "PUT")
     public ResponseEntity<ContactResponseDto> alterContact(@PathVariable Long id,
-                                                             @RequestBody ContactRequestDto contactRequestDto){
+                                                           @RequestBody ContactRequestDto contactRequestDto){
         ContactResponseDto contactResponseDto = contactService.update(id, contactRequestDto);
         return new ResponseEntity<>(contactResponseDto, HttpStatus.OK);
     }
