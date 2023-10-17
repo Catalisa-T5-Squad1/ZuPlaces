@@ -15,7 +15,7 @@ public class ContactModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Schema(description = "Nome compelto", example = "Ricardo dos Santos")
+    @Schema(description = "Nome contato", example = "Ricardo dos Santos")
     private String name;
 
     @Schema(description = "E-mail", example = "usuario@zup.com.br")
