@@ -35,7 +35,6 @@ public class UserController {
                         .collect(Collectors.toList()));
     }
 
-
     @GetMapping(value = ID)
     @Operation(summary = "busca um usuario cadastrado por id", method = "GET")
     public ResponseEntity<UserResponseDto> findById (@PathVariable Long id){
@@ -59,7 +58,7 @@ public class UserController {
     @PutMapping(value = ID)
     @Operation(summary = "atualiza um usuario existente", method = "PUT")
     public ResponseEntity<UserResponseDto> update( @PathVariable Long id, @RequestBody UserResponseDto userResponseDto){
-            UserModel updateUser = service.update(id, userResponseDto);
-            return ResponseEntity.ok().body(mapper.map(updateUser, UserResponseDto.class));
+        UserModel updateUser = service.update(id, userResponseDto);
+        return ResponseEntity.ok().body(mapper.map(updateUser, UserResponseDto.class));
     }
 }

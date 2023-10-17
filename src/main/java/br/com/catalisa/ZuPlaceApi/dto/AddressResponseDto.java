@@ -30,7 +30,9 @@ public class AddressResponseDto {
     @Schema(description = "Estado", example = "PR")
     private String uf;
 
+    @Schema(description = "Latitude")
     private Double latitude;
-    private Double longitude;
 
+    @Schema(description = "Longitude")
+    private Double longitude;
 }

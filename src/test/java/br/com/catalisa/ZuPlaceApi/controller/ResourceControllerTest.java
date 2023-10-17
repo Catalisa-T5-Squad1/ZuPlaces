@@ -55,8 +55,8 @@ public class ResourceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].name").value("Internet"))
-                .andExpect(jsonPath("$[1].name").value("Computador"))
+                .andExpect(jsonPath("$[0].nome").value("Internet"))
+                .andExpect(jsonPath("$[1].nome").value("Computador"))
                 .andDo(print());
     }
 
@@ -70,7 +70,7 @@ public class ResourceControllerTest {
         ResultActions resultActions = mockMvc.perform(get("/api/resources/{id}", resourceId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value("Sample Resource"));
+                .andExpect(jsonPath("$.nome").value("Sample Resource"));
 
         verify(resourceService, times(1)).findById(resourceId);
 
@@ -92,7 +92,7 @@ public class ResourceControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value("Sample Resource"));
+                .andExpect(jsonPath("$.nome").value("Sample Resource"));
 
         verify(resourceService, times(1)).create(any(ResourceRequestDto.class));
     }
@@ -112,7 +112,7 @@ public class ResourceControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.name").value("Updated Resource"));
+                .andExpect(jsonPath("$.nome").value("Updated Resource"));
 
         verify(resourceService, times(1)).update(eq(1L), any(ResourceRequestDto.class));
     }
