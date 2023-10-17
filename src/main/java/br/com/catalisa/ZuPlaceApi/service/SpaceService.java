@@ -117,6 +117,7 @@ public class SpaceService {
             spaceModel.setUser(userModel);
             spaceModel.setResource(resourceModel);
             spaceModel.setAddress(addressModelSave);
+            spaceModel.setDescription(spaceRequestDto.getDescription());
 
             logger.info("Salvando Espaço no banco de dados");
             spaceRepository.save(spaceModel);
