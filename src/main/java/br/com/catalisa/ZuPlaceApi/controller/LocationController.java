@@ -4,9 +4,9 @@ import br.com.catalisa.ZuPlaceApi.dto.GeoLocationUserResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestProximityLocationDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseProximityLocationDto;
 import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
-import br.com.catalisa.ZuPlaceApi.service.AddressService;
 import br.com.catalisa.ZuPlaceApi.service.GoogleMapsService;
 import br.com.catalisa.ZuPlaceApi.service.LocationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,26 +31,24 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-
     @GetMapping
+    @Operation(summary = " : Pega a localizacao do usuário", method = "GET")
     public ResponseEntity<GeoLocationUserResponseDto> getLocationUser() throws ExternalRequestFailureException {
+        logger.debug("Método getLocationUser() chamado");
         GeoLocationUserResponseDto geoLocationUserResponseDto = googleMapsService.getLatitudeAndLongitudeUser();
-        System.out.println("Requisição foi feita ->  "
-                + "Latitude: "
-                + geoLocationUserResponseDto.getLatitude()
-                + " "
-                + "Longitude: "
-                + geoLocationUserResponseDto.getLongitude());
+        logger.info("getLocationUser() -> Latitude: {}, Longitude: {}", geoLocationUserResponseDto.getLatitude(), geoLocationUserResponseDto.getLongitude());
         return ResponseEntity.status(HttpStatus.OK).body(geoLocationUserResponseDto);
     }
 
     @PostMapping
-    public ResponseEntity<List<SpaceResponseProximityLocationDto>> createLong(@RequestBody SpaceRequestProximityLocationDto spaceRequestProximityLocationDto) throws ExternalRequestFailureException {
+    @Operation(summary = " : Lista todos os espaços próximos do usuário", method = "POST")
+    public ResponseEntity<List<SpaceResponseProximityLocationDto>> createLongitudeAndLatitude(@RequestBody SpaceRequestProximityLocationDto spaceRequestProximityLocationDto) throws ExternalRequestFailureException {
+        logger.debug("Método createLongitudeAndLatitude() chamado");
         List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationDto = locationService.findSpacesByAddressProximity(
                 spaceRequestProximityLocationDto.getLatitudeOrigem(),
                 spaceRequestProximityLocationDto.getLongitudeOrigem(),
                 spaceRequestProximityLocationDto.getMaxDistance());
-        System.out.println("Requisição da lista de spaces feita: " + spaceResponseProximityLocationDto);
+        logger.info("Total de espaços encontrados: {}", spaceResponseProximityLocationDto.size());
         return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
     }
 }
