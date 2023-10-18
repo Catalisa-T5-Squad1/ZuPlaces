@@ -1,14 +1,15 @@
 const searchUserInput = document.getElementById('searchUser');
 const userSuggestions = document.getElementById('userSuggestions');
-let selectedUser = null;
+let selectedUser = {
+    id: null,
+    name: null
+};
 
 searchUserInput.addEventListener('input', () => {
     const searchTerm = searchUserInput.value;
 
-    // Limpe a lista suspensa
     userSuggestions.innerHTML = '';
 
-    // Faça uma solicitação para buscar usuários conforme o usuário digita
     if (searchTerm.trim() !== '') {
         fetch(`http://localhost:8080/api/users/search?nome=${searchTerm}`)
             .then(response => response.json())
@@ -18,14 +19,15 @@ searchUserInput.addEventListener('input', () => {
                     userOption.classList.add('suggestion-item');
 
                     const userHeader = document.createElement('h3');
-                    userHeader.style.color = 'black'; // Defina a cor preta
+                    userHeader.style.color = 'black'; 
                     userHeader.innerHTML = `<strong>Usuário:</strong> ${user.name}`;
                     userOption.appendChild(userHeader);
                 
                     userOption.addEventListener('click', () => {
                         searchUserInput.value = user.name;
-                        selectedUser = user.name; // Armazene o usuário selecionado na variável selectedUser
-                        console.log('Usuário selecionado:', selectedUser); // Imprima no console.log
+                        selectedUser.id = user.id;  // Salvar o ID do usuário selecionado
+                        selectedUser.name = user.name;  // Salvar o nome do usuário selecionado
+                        console.log('Usuário selecionado:', selectedUser);
                         userSuggestions.innerHTML = '';
                     });
                     userSuggestions.appendChild(userOption);
@@ -37,88 +39,49 @@ searchUserInput.addEventListener('input', () => {
     }
 });
 
-userOption.addEventListener('click', () => {
-    searchUserInput.value = user.nome;
-    selectedUser = user.name;
-    console.log('Usuário selecionado:', selectedUser);
-    userSuggestions.innerHTML = '';
-});
+// userOption.addEventListener('click', () => {
+//     searchUserInput.value = user.nome;
+//     selectedUser = user.name;
+//     console.log('Usuário selecionado:', selectedUser);
+//     userSuggestions.innerHTML = '';
+// });
 
-// Exemplo de como usar a variável selectedUser fora do evento de clique
-// Se você precisar acessar selectedUser em outras partes do seu código, você pode fazê-lo aqui ou em outros eventos/funções.
-// Por exemplo:
-// Alguma função que é chamada após o usuário ter selecionado um usuário:
+
 function processSelectedUser() {
     if (selectedUser) {
         console.log('Usuário selecionado:', selectedUser);
-        // Faça alguma coisa com selectedUser...
     } else {
         console.log('Nenhum usuário selecionado.');
     }
 }
 
+const resourcedSelected = processSelectedResource();
 
+console.log("Estou aqui no cadastro space, será que deu bom? : -> " +  resourcedSelected);
 
+const spaceForm = document.getElementById('spaceForm');
 
-
-
-
-
-
-function buscarUsers() {
-    fetch('http://localhost:8080/api/users')
-        .then(response => response.json())
-        .then(data => {
-            const escolherUser = document.getElementById('escolher-user');
-
-            escolherUser.innerHTML = '';
-
-            const option = document.createElement('option');
-            option.text = 'Escolha um User';
-            escolherUser.appendChild(option);
-
-            data.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.id;
-                option.text = user.nome;
-                escolherUser.appendChild(option);
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
-
-buscarUsers();
-
-document.getElementById('spaceForm').addEventListener('submit', function (event) {
+spaceForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const escolhido = document.getElementById('escolher-user').value;
-    console.log('Usuário escolhido:', escolhido);
-});
+    const formData = new FormData(spaceForm);
 
+    const spaceData = {
+        nome: formData.get('nome'),
+        usuario_id: selectedUser.id, // Certifique-se de ajustar o nome do campo de usuário.
+        recurso_id: selectedResource.id, // Certifique-se de ajustar o nome do campo de recurso.
+        endereco: {
+            cep: formData.get('endereco.cep'),
+            numero_endereco: formData.get('endereco.numero_endereco'),
+            complemento: formData.get('endereco.complemento')
+        },
+        horario_funcionamento: formData.get('horario_funcionamento'),
+        descricao_espaco: formData.get('descricao_espaco')
+    };
 
+    console.log("o spaceData é: " + spaceData);
 
-
-document.getElementById('spaceForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const formData = new FormData(this);
-    const spaceData = {};
-
-    formData.forEach((value, key) => {
-        const keys = key.split('.');
-        if (keys.length > 1) {
-            if (!spaceData[keys[0]]) {
-                spaceData[keys[0]] = {};
-            }
-            spaceData[keys[0]][keys[1]] = value;
-        } else {
-            spaceData[key] = value;
-        }
-    });
-
+    // Enviar os dados do espaço para o servidor via POST
     fetch('http://localhost:8080/api/spaces', {
         method: 'POST',
         headers: {
@@ -126,17 +89,20 @@ document.getElementById('spaceForm').addEventListener('submit', function (event)
         },
         body: JSON.stringify(spaceData),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            
-            const mensagemSucesso = document.getElementById('mensagem-sucesso');
-            mensagemSucesso.style.display = 'block';
+        .then(response => {
+            if (response.status === 201) {
+                // Espaço criado com sucesso
+                document.getElementById('mensagem-sucesso').style.display = 'block';
+            } else {
+                // Lidar com erros
+                console.error('Erro ao criar espaço:', response.statusText);
+            }
         })
         .catch(error => {
-            console.error(error);
+            console.error('Erro ao criar espaço:', error);
         });
 });
+
 
 function buscarNomeUsuarioPorID() {
     const userID = document.getElementById('userIDInput').value;
