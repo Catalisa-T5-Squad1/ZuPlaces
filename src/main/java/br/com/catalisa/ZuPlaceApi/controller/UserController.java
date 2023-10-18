@@ -42,6 +42,12 @@ public class UserController {
         return ResponseEntity.ok().body(mapper.map(service.findById(id), UserResponseDto.class));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<UserModel>> searchUsers(@RequestParam("nome") String nome) {
+        List<UserModel> users = service.searchUsersByName(nome);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
     @PostMapping
     @Operation(summary = " : Cadastra um novo usuario", method = "POST")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){

@@ -2,6 +2,8 @@ package br.com.catalisa.ZuPlaceApi.controller;
 
 import br.com.catalisa.ZuPlaceApi.dto.ResourceRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.ResourceResponseDto;
+import br.com.catalisa.ZuPlaceApi.model.ResourceModel;
+import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.service.ResourceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +35,12 @@ public class ResourceController {
     public ResponseEntity<ResourceResponseDto> findResourceById(@PathVariable Long id){
         ResourceResponseDto responseDto = resourceService.findById(id);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ResourceModel>> searchRecources(@RequestParam("nome") String nome) {
+        List<ResourceModel> resourceModels = resourceService.searchResourceByName(nome);
+        return new ResponseEntity<>(resourceModels, HttpStatus.OK);
     }
 
     @PostMapping
