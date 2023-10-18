@@ -44,9 +44,13 @@ th {
   border-bottom: 2px solid #ddd;
 }
 
-.suggestions {
-  background-color: #ccc;
+
+
+ul#userSuggestions.suggestions {
+  padding: .5rem;
+  list-style: none;
 }
+
 
 .button-container {
   display: flex;

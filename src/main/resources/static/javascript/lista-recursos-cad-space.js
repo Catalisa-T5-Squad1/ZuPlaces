@@ -25,8 +25,8 @@ searchResourceInput.addEventListener('input', () => {
 
                     resourceOption.addEventListener('click', () => {
                         searchResourceInput.value = resource.name;
-                        selectedResource.id = resource.id;  // Salvar o ID do recurso selecionado
-                        selectedResource.name = resource.name;  // Salvar o nome do recurso selecionado
+                        selectedResource.id = resource.id;  
+                        selectedResource.name = resource.name; 
                         console.log('Recurso selecionado:', selectedResource);
                         resourceSuggestions.innerHTML = '';
                     });

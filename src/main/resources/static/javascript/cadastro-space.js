@@ -28,7 +28,7 @@ searchUserInput.addEventListener('input', () => {
                         selectedUser.id = user.id;  // Salvar o ID do usuário selecionado
                         selectedUser.name = user.name;  // Salvar o nome do usuário selecionado
                         console.log('Usuário selecionado:', selectedUser);
-                        userSuggestions.innerHTML = '';
+                        userSuggestions.ingnerHTML = '';
                     });
                     userSuggestions.appendChild(userOption);
                 });
@@ -55,9 +55,47 @@ function processSelectedUser() {
     }
 }
 
-const resourcedSelected = processSelectedResource();
+const searchResourceInput = document.getElementById('searchResource');
+const resourceSuggestions = document.getElementById('resourceSuggestions');
+let selectedResource = {
+    id: null,
+    name: null
+};
 
-console.log("Estou aqui no cadastro space, será que deu bom? : -> " +  resourcedSelected);
+searchResourceInput.addEventListener('input', () => {
+    const searchTerm = searchResourceInput.value;
+
+    resourceSuggestions.innerHTML = '';
+
+    if (searchTerm.trim() !== '') {
+        fetch(`http://localhost:8080/api/resources/search?nome=${searchTerm}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(resource => {
+                    const resourceOption = document.createElement('li');
+                    resourceOption.classList.add('suggestion-item');
+
+                    const resourceHeader = document.createElement('h3');
+                    resourceHeader.style.color = 'black';
+                    resourceHeader.innerHTML = `<strong>Recurso:</strong> ${resource.name}`;
+                    resourceOption.appendChild(resourceHeader);
+
+                    resourceOption.addEventListener('click', () => {
+                        searchResourceInput.value = resource.name;
+                        selectedResource.id = resource.id;  
+                        selectedResource.name = resource.name; 
+                        console.log('Recurso selecionado:', selectedResource);
+                        resourceSuggestions.innerHTML = '';
+                    });
+                    resourceSuggestions.appendChild(resourceOption);
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+});
+
 
 const spaceForm = document.getElementById('spaceForm');
 
@@ -68,20 +106,19 @@ spaceForm.addEventListener('submit', (event) => {
 
     const spaceData = {
         nome: formData.get('nome'),
-        usuario_id: selectedUser.id, // Certifique-se de ajustar o nome do campo de usuário.
-        recurso_id: selectedResource.id, // Certifique-se de ajustar o nome do campo de recurso.
+        usuario_id: selectedUser.id,
+        recurso_id: selectedResource.id, 
         endereco: {
-            cep: formData.get('endereco.cep'),
-            numero_endereco: formData.get('endereco.numero_endereco'),
-            complemento: formData.get('endereco.complemento')
+            cep: document.getElementById('cep').value,
+            numero_endereco: document.getElementById('numero_endereco').value,
+            complemento: document.getElementById('complemento').value
         },
-        horario_funcionamento: formData.get('horario_funcionamento'),
-        descricao_espaco: formData.get('descricao_espaco')
+        horario_funcionamento: document.getElementById('horario_funcionamento').value,
+        descricao_espaco: document.getElementById('descricao_espaco').value
     };
 
     console.log("o spaceData é: " + spaceData);
 
-    // Enviar os dados do espaço para o servidor via POST
     fetch('http://localhost:8080/api/spaces', {
         method: 'POST',
         headers: {
@@ -91,10 +128,8 @@ spaceForm.addEventListener('submit', (event) => {
     })
         .then(response => {
             if (response.status === 201) {
-                // Espaço criado com sucesso
                 document.getElementById('mensagem-sucesso').style.display = 'block';
             } else {
-                // Lidar com erros
                 console.error('Erro ao criar espaço:', response.statusText);
             }
         })

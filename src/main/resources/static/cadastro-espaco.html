@@ -35,50 +35,50 @@
         <div class="titulo-cadastro">
             <h1 class="titulo" >CADASTRO DE ESPAÇO</h1>
         </div>
-        <form class="dados-pessoais" id="spaceForm">
-            <div>
-                <h3>Nome do Espaço:</h3>
-            </div>
-            <input type="text" id="nome" name="nome" placeholder="Nome do Espaço" required><br><br>
-    
-            <div>
-                <h3>Responsável pelo espaço:</h3>
-            </div>
-            <input type="text" id="searchUser" placeholder="Digite o nome do usuário">
-            <ul id="userSuggestions" class="suggestions"></ul>
+            <form class="dados-pessoais" id="spaceForm">
+                <div>
+                    <h3>Nome do Espaço:</h3>
+                </div>
+                <input type="text" id="nome" name="nome" placeholder="Nome do Espaço" required><br><br>
+        
+                <div>
+                    <h3>Responsável pelo espaço:</h3>
+                </div>
+                <input type="text" id="searchUser" placeholder="Digite o nome do usuário">
+                <ul id="userSuggestions" class="suggestions"></ul>
 
-            <div>
-                <h3>Recursos disponivel:</h3>
-            </div>
-            <input type="text" id="searchResource" placeholder="Digite o nome do recurso">
-            <ul id="resourceSuggestions" class="suggestions"></ul>
+                <div>
+                    <h3>Recursos disponivel:</h3>
+                </div>
+                <input type="text" id="searchResource" placeholder="Digite o nome do recurso">
+                <ul id="resourceSuggestions" class="suggestions"></ul>
 
-            <div>
-                <h3>Horário de funcionamento</h3>
-            </div>
-            <textarea id="horario_funcionamento" name="horario_funcionamento" rows="4" cols="50" placeholder="Segunda a sexta feira das 08:00 até as 22:00" required></textarea><br><br>
+                <div>
+                    <h3>Horário de funcionamento</h3>
+                </div>
+                <textarea id="horario_funcionamento" name="horario_funcionamento" rows="4" cols="50" placeholder="Segunda a sexta feira das 08:00 até as 22:00" required></textarea><br><br>
 
-            <div>
-                <h3>Descrição do espaço e recurso:</h3>
-            </div>
-            <textarea id="descricao_espaco" name="descricao_espaco" rows="4" cols="50" placeholder="Vacina da gripe de forma gratuita" required></textarea><br><br>
+                <div>
+                    <h3>Descrição do espaço e recurso:</h3>
+                </div>
+                <textarea id="descricao_espaco" name="descricao_espaco" rows="4" cols="50" placeholder="Vacina da gripe de forma gratuita" required></textarea><br><br>
 
-            <h3>Endereço:</h3>
-            <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="endereco.cep" placeholder="XX.XXX-XXX" required><br><br>
-    
-            <label for="numero_endereco">Número do Endereço:</label>
-            <input type="text" id="numero_endereco" name="endereco.numero_endereco" placeholder="30" required><br><br>
-    
-            <label for="complemento">Complemento:</label>
-            <input type="text" id="complemento" name="endereco.complemento" placeholder="Ponto de Referência" required><br><br>
-    
-            <button type="submit">Cadastrar Space</button>
-        </form>
-
+                <h3>Endereço:</h3>
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" name="cep" placeholder="XX.XXX-XXX" required><br><br>
+        
+                <label for="numero_endereco">Número do Endereço:</label>
+                <input type="text" id="numero_endereco" name="numero_endereco" placeholder="30" required><br><br>
+        
+                <label for="complemento">Complemento:</label>
+                <input type="text" id="complemento" name="endereco_complemento" placeholder="Ponto de Referência" required><br><br>
+        
+                <button type="submit">Cadastrar Space</button>
+            </form>
         <div id="mensagem-sucesso" style="display: none; color: green; font-weight: bold;">
             Espaço cadastrado com sucesso!
         </div>
+    
 </main>
 <footer>
     <div class="div-footer">
@@ -177,7 +177,7 @@
       <script src="./javascript/ajax.js"></script>
       <script src="./javascript/modalLogin.js"></script>
       <script src="./javascript/cadastro-space.js"></script>
-      <script src="./javascript/lista-recursos-cad-space.js"></script>
+
       
       
 
