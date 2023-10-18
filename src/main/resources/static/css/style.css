@@ -44,6 +44,10 @@ th {
   border-bottom: 2px solid #ddd;
 }
 
+.suggestions {
+  background-color: #ccc;
+}
+
 .button-container {
   display: flex;
   justify-content: space-between;

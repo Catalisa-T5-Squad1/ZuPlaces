@@ -47,6 +47,10 @@ public class UserService {
         }
     }
 
+    public List<UserModel> searchUsersByName(String nome) {
+        return repository.findByNameContainingIgnoreCase(nome);
+    }
+
     public UserModel update(Long id, UserResponseDto userResponseDto) {
         UserModel updatedUser  = findById(id);
         if (updatedUser == null){
