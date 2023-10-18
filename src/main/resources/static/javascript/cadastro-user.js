@@ -1,32 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('cadastroUsuarioForm');
-    const cpfField = document.getElementById('documento');
-    const typePerson = "";
+
+    let typePerson;
 
     form.addEventListener('submit', function(event) {
       event.preventDefault();
 
-      // if(parseInt(cpfField.value) === 11) {
-      //   typePerson = "PHYSICAL_PERSON"
-      //   console.log(typePerson)
-      // } else {
-      //   console.log(cpfField.value)
-      //   alert("o CPF deve possuir apenas 11 caracteres e não deve ter pontos")
-      //   return;
-      // }
+      console.log("Tamanho é : " + document.getElementById('documento').value.length)
 
-      // if(cpfField.value == 14) {
-      //   typePerson = "LEGAL_PERSON"
-      // } else {
-      //   alert("o CNPJ deve possuir apenas 14 caracteres e não deve ter pontos")
-      //   return;
-      // }
+      if (document.getElementById('documento').value.length === 11) {
+        typePerson = "PHYSICAL_PERSON";
+      } else if (document.getElementById('documento').value.length === 14) {
+        typePerson = "LEGAL_PERSON";
+      } else {
+        typePerson = "INVALID_DOCUMENT";
+      }
     
-      const nome = document.getElementById('nome').value;
-      const cpf = cpfField.value;
-      const telefone = document.getElementById('telefone').value;
-      const email = document.getElementById('login').value;
-      const senha = document.getElementById('senhaCadastro').value;
+      const senha = document.getElementById('confirmarSenhaCadastro').value;
       const confirmarSenha = document.getElementById('confirmarSenhaCadastro').value;
     
       if (senha !== confirmarSenha) {
@@ -35,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   
       const usuarioData = {
-        nome: nome,
-        email: email,
-        senha: senha,
-        tipo_pessoa: "PHYSICAL_PERSON",
-        telefone: telefone,
-        documento_identificacao: cpf,
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('login').value,
+        senha: document.getElementById('confirmarSenhaCadastro').value,
+        tipo_pessoa: typePerson,
+        telefone: document.getElementById('telefone').value,
+        documento_identificacao: document.getElementById('documento').value,
       };
     
       fetch('http://localhost:8080/api/users', {
@@ -54,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(usuarioData => {
           console.log(usuarioData);
           if (usuarioData) {
+            console.log("Usuário é: " + usuarioData);
             alert('Cadastro realizado com sucesso!');
             form.reset();
           } else {
