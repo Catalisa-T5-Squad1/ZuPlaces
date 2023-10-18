@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZuPlace</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlf_lqH3R8cR_4AWVnKpsNjGGk-ZSzAPA&callback=initMap&libraries=&v=weekly" defer></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/modalLogin.css">
+    <link rel="stylesheet" href="./css/cadastro.css">
+    <link rel="stylesheet" href="./css/cadastro-user.css">
+  </head>
+  <body>
+  <header class="nav">   
+      <div class="logo-header" >
+          <a href="./index.html"><img src="images/PLACE.png" alt="" class="logo"></a>
+      </div>
+
+      <div class="divBusca">
+          <input type="search" id="txtBusca" placeholder="Busque o recurso..."/>
+          <a href="#"><img src="images/header-footer/lupa-.png" id="btnBusca" alt="Buscar"/></a>
+      </div>
+      
+      <nav>
+          <div class="divMinhaConta">
+              <a href="#"><img src="images/header-footer/user-nav.png" id="btnMinhaConta" alt="minha-conta"/></a>
+          </div>
+      </nav>
+  </header>
+  <main>
+    <div class="div.cadastro">
+        <div class="titulo-cadastro titulo">
+            <h1>CADASTRO DE USUÁRIO</h1>
+        </div>
+        <div class="form" >
+            <form id="cadastroUsuarioForm">
+            <div class="dados-pessoais">
+                <div>
+                <h3 class="">Dados de Cadastro:</h3>
+                </div>
+                <div class="alerta-erros-validacao">
+                    <div class="invisible err-nome">*Preencha o nome correto</div>
+                    <div class="invisible err-cpf">*Preencha o cpf errado</div>
+                    <div class="invisible err-data-nascimento">*Preencha a data de nascimento</div>
+                </div>
+                <div>
+                    <label for="nome"></label>
+                    <input type="text" name="nome" id="nome" placeholder="Nome Completo">
+                    <label for="cpf"></label>
+                    <input type="text" name="cpf" id="documento" placeholder="CPF/CNPJ: 000.000.000-00">
+                </div>
+                
+            </div>
+            
+            <div class="dados-contatos">
+                <div>
+                    <h3>Dados de Contato:</h3>
+                </div>
+                <div class="alerta-erros-validacao">
+                    <div class="invisible err-email">*Preencha o e-mail</div>
+                    <div class="invisible err-telefone">*Preencha o celular</div>
+                </div>
+                <div>
+                    <label for="telefone"></label>
+                    <input type="tel" id="telefone" placeholder="(XX) X XXXX-XXXX">
+                </div>
+            </div>
+            <div class="criar-login">
+                <div>
+                    <h3 class="">Criar login</h3>
+                </div>
+                <div class="alerta-erros-validacao">
+                    <div class="invisible err-login">*Preencha o e-mail</div>
+                    
+                </div>
+                
+                <div>
+                    <label for="login"></label>
+                    <input type="email" id="login" placeholder="Digite seu e-mail"> 
+                </div>
+                <div class="alerta-erros-validacao">
+                    <div class="invisible err-senha">*Preencha sua senha</div>
+                    <div class="invisible err-confirmarSenha">*Preencha sua senha</div>
+                </div>
+                
+                <div>
+                    <label for="senha"></label>
+                    <input type="password" id="senhaCadastro" placeholder="Digite sua senha">      
+                    <label for="confirmar-senha"></label>
+                    <input type="password" id="confirmarSenhaCadastro" placeholder="Confirme sua senha">
+                </div>
+            </div>
+        </div>
+            <button type="submit">Criar Conta</button>
+            </form>          
+    </div>
+    <div>
+        <h2 class="titulo">Usuários Cadastrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Documento</th>
+                    <th>Tipo de Pessoa</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="usersTableBody">
+            </tbody>
+        </table>
+    </div>
+</main>
+<footer>
+    <div class="div-footer">
+        <div class="div-institucional">
+            <section class="institucional"><h3>Institucional</h3>
+                <div>
+                    <a href="www.zup.com.br"><h5>Empresa</h5></a>
+                    <a href="#"><h5>Termo de uso</h5></a>
+                    <a href="#"><h5>Contato</h5></a>
+                </div>
+            </section>
+        </div>
+        <div class="div-atendimento">
+            <section class="atendimento"><h3>Atendimento</h3>
+                <div class="up-div">
+                    <div class="contatos-footer">
+                        <img src="images/header-footer/telefone-icon.png" alt="">
+                        <a href="#"><h5>Telefone</h5></a>
+                    </div>
+                    <div class="contatos-footer">
+                        <img src="images/header-footer/whatsapp-icon.png" alt="">
+                        <a href="#"><h5>Whatsapp</h5></a>
+                    </div>
+                    <div class="contatos-footer">
+                        <img src="images/header-footer/email-icon.png" alt="">
+                        <a href="#"><h5>E-mail</h5></a>
+                    </div>
+                </div>
+                <div class="down-div">
+                    <p>Nosso horário de atendimento é de segunda a sexta feira das 09:00 até às 17:00 e Sábado das 08:00 até as 12:00.</p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="div-rede-sociais">
+            <section class="rede-sociais"><h3>Rede Sociais</h3>
+                <div class="up-div">
+                    <div class="redeSocial-footer">
+                        <img src="images/header-footer/facebook-icon-removebg-preview.png" alt="">
+                        <a href="#"><h5>Facebook</h5></a>
+                    </div>
+                    <div class="redeSocial-footer">
+                        <img src="images/header-footer/instagram-icon-removebg-preview.png" alt="">
+                        <a href="#"><h5>Instagram</h5></a>
+                    </div>
+                    <div class="redeSocial-footer">
+                        <img src="images/header-footer/linkedin-icon.png" alt="">
+                        <a href="#"><h5>Linkedin</h5></a>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+  
+    </div>                           
+</footer>
+<p class="copy" >&copy; Copyright 2023, ZuPlace.</p>  
+<div id="modal-login" class="modal-container">
+    <div class="modal div-login">
+        <button class="fechar">&times;</button>
+            <form>
+                
+                <div class="titulo-login">
+                    <h1> ACESSAR A CONTA</h1>
+                </div>
+                <div class="login-email-senha">
+                    <label for="email-cpf"></label>
+                    <input type="text" name="email-cpf" id="email-cpf" placeholder="E-mail ou CPF"> 
+
+                    <label for="senha"></label>
+                    <input type="password" name="senha" id="senha" placeholder="Digite sua senha"> 
+                </div>
+                <div class="lembrar-senha">
+                    <input class="senha" type="checkbox" name="esquecer-a-senha">
+                    <label for="esquecer-a-senha">Lembrar senha</label>
+                </div>
+                <div class="botao-cadastro-e-login">
+                    <div class="botao-cadastro">
+                        <a href="./cadastro-user.html">Cadastrar</a>
+                    </div>
+                    <div class="botao-login">
+                        <button type="submit">Login</button>      
+                    </div>
+                </div>
+                                 
+            </form>
+    </div>
+</div>
+    </body>
+    
+    </html>
+      <script src="./javascript/modalLogin.js"></script>
+      <script src="./javascript/cadastro-user.js"></script>
+      <script src="./javascript/lista-user.js"></script>
+  </body>
+</html>
