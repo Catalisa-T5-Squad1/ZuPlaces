@@ -23,7 +23,6 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String name;
     @Email(message = "Email inválido")
     @NotEmpty(message = "Email não pode ser vazio")
@@ -35,7 +34,7 @@ public class UserModel {
     private PersonType personType;
 
     private String phone;
-@CpfOrCnpj
+    @CpfOrCnpj
     private String documentType;
 
     @OneToMany(mappedBy = "user")

@@ -24,14 +24,9 @@ public class ContactModel{
     @Schema(description = "Telefone", example = "11988887777")
     private String phone;
 
+    @Schema(description = "Espaço Indicado", example = "USP")
+    private String spaceIndicated;
+
     @Schema(description = "Descrição", example = "Gostaria de indicar esse espaço na empresa XPTO")
     private String description;
-
-    @OneToOne
-    @Schema(description = "Usuário", example = "USP")
-    private UserModel userModel;
-
-    @OneToOne
-    @Schema(description = "Espaço", example = "Biblioteca - Bloco A")
-    private SpaceModel spaceModel;
 }

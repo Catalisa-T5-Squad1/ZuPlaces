@@ -1,11 +1,14 @@
 package br.com.catalisa.ZuPlaceApi.service;
 
+import br.com.catalisa.ZuPlaceApi.controller.UserController;
 import br.com.catalisa.ZuPlaceApi.dto.UserRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.UserResponseDto;
 import br.com.catalisa.ZuPlaceApi.exception.ResourseNotFoundException;
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
 import br.com.catalisa.ZuPlaceApi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,9 @@ import java.util.Optional;
 @Service
 
 public class UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     UserRepository repository;
     @Autowired
@@ -25,26 +31,29 @@ public class UserService {
     }
 
     public UserModel findById(Long id) {
+        logger.debug("Método findById() chamado");
         Optional<UserModel> user = repository.findById(id);
         return user.orElseThrow(() -> new ResourseNotFoundException("usuário não encontrado"));
     }
 
     public UserResponseDto create(UserRequestDto userRequestDto) {
         try {
-
-
             UserModel userModel = mapper.map(userRequestDto, UserModel.class);
-
-
             repository.save(userModel);
-
             UserResponseDto responseDto = mapper.map(userModel, UserResponseDto.class);
-
             return responseDto;
         } catch (Exception e){
 
             throw new ResourseNotFoundException("usuário não cadastrado");
         }
+    }
+
+    public List<UserModel> searchUsersByName(String nome) {
+        return repository.findByNameContainingIgnoreCase(nome);
+    }
+
+    public UserModel findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
     public UserModel update(Long id, UserResponseDto userResponseDto) {
@@ -53,12 +62,12 @@ public class UserService {
             throw  new ResourseNotFoundException("Usuário não encontrado");
         }
         updatedUser.setName(userResponseDto.getName());
-updatedUser.setEmail(userResponseDto.getEmail());
-updatedUser.setPassword(userResponseDto.getPassword());
-updatedUser.setPersonType(userResponseDto.getPersonType());
-updatedUser.setPhone(userResponseDto.getPhone());
-updatedUser.setDocumentType(userResponseDto.getDocumentType());
-return  repository.save(updatedUser);
+        updatedUser.setEmail(userResponseDto.getEmail());
+        updatedUser.setPassword(userResponseDto.getPassword());
+        updatedUser.setPersonType(userResponseDto.getPersonType());
+        updatedUser.setPhone(userResponseDto.getPhone());
+        updatedUser.setDocumentType(userResponseDto.getDocumentType());
+        return  repository.save(updatedUser);
     }
 
     public void delete(Long id) {

@@ -2,6 +2,7 @@ package br.com.catalisa.ZuPlaceApi.controller;
 
 import br.com.catalisa.ZuPlaceApi.dto.GeoLocationUserResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestProximityLocationDto;
+import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestResourceLocationDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseProximityLocationDto;
 import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
 import br.com.catalisa.ZuPlaceApi.service.AddressService;
@@ -31,25 +32,30 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-
     @GetMapping
-    public ResponseEntity<GeoLocationUserResponseDto> getLocationUser() throws ExternalRequestFailureException {
+    public ResponseEntity<GeoLocationUserResponseDto> getLocationUser() {
+        logger.debug("Método getLocationUser() chamado");
         GeoLocationUserResponseDto geoLocationUserResponseDto = googleMapsService.getLatitudeAndLongitudeUser();
-        System.out.println("Requisição foi feita ->  "
-                + "Latitude: "
-                + geoLocationUserResponseDto.getLatitude()
-                + " "
-                + "Longitude: "
-                + geoLocationUserResponseDto.getLongitude());
+        logger.info("Latitude: {}, Longitude: {}", geoLocationUserResponseDto.getLatitude(), geoLocationUserResponseDto.getLongitude());
         return ResponseEntity.status(HttpStatus.OK).body(geoLocationUserResponseDto);
     }
 
     @PostMapping
-    public ResponseEntity<List<SpaceResponseProximityLocationDto>> createLong(@RequestBody SpaceRequestProximityLocationDto spaceRequestProximityLocationDto) throws ExternalRequestFailureException {
+    public ResponseEntity<List<SpaceResponseProximityLocationDto>> createLong(@RequestBody SpaceRequestProximityLocationDto spaceRequestProximityLocationDto) {
         List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationDto = locationService.findSpacesByAddressProximity(
                 spaceRequestProximityLocationDto.getLatitudeOrigem(),
                 spaceRequestProximityLocationDto.getLongitudeOrigem(),
                 spaceRequestProximityLocationDto.getMaxDistance());
+        System.out.println("Requisição da lista de spaces feita: " + spaceResponseProximityLocationDto);
+        return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
+    }
+
+    @PostMapping(path = "/resource")
+    public ResponseEntity<List<SpaceResponseProximityLocationDto>> findForResource(@RequestBody SpaceRequestResourceLocationDto spaceRequestResourceLocationDto) {
+        List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationDto = locationService.findSpacesByResources(
+                spaceRequestResourceLocationDto.getLatitudeOrigem(),
+                spaceRequestResourceLocationDto.getLongitudeOrigem(),
+                spaceRequestResourceLocationDto.getRecurso());
         System.out.println("Requisição da lista de spaces feita: " + spaceResponseProximityLocationDto);
         return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
     }
