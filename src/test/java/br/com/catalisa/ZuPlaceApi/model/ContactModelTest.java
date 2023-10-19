@@ -15,12 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ContactModelTest {
 
-    @Mock
-    private UserModel userModel;
-
-    @Mock
-    private SpaceModel spaceModel;
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -34,16 +28,12 @@ public class ContactModelTest {
         contact.setEmail("usuario@zup.com.br");
         contact.setPhone("11988887777");
         contact.setDescription("Gostaria de indicar esse espaço na empresa XPTO");
-        contact.setUserModel(userModel);
-        contact.setSpaceModel(spaceModel);
 
         assertEquals(1L, contact.getId());
         assertEquals("Ricardo dos Santos", contact.getName());
         assertEquals("usuario@zup.com.br", contact.getEmail());
         assertEquals("11988887777", contact.getPhone());
         assertEquals("Gostaria de indicar esse espaço na empresa XPTO", contact.getDescription());
-        assertEquals(userModel, contact.getUserModel());
-        assertEquals(spaceModel, contact.getSpaceModel());
     }
 }
 

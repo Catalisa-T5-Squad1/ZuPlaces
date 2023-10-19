@@ -44,8 +44,8 @@ public class ResourceControllerTest {
     @Test
     void testFindAllResources() throws Exception {
         List<ResourceResponseDto> resourceDtoList = new ArrayList<>();
-        ResourceResponseDto dto1 = new ResourceResponseDto("Internet");
-        ResourceResponseDto dto2 = new ResourceResponseDto("Computador");
+        ResourceResponseDto dto1 = new ResourceResponseDto(1L,"Internet");
+        ResourceResponseDto dto2 = new ResourceResponseDto(2L,"Computador");
         resourceDtoList.add(dto1);
         resourceDtoList.add(dto2);
 
