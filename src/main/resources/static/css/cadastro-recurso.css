@@ -9,7 +9,7 @@
     border-radius: 15px;
     height: 30px;
     border: none;
-    color: rgba(255, 83, 3, 0.256);
+    color: #0c3455;
 }
 
 header.nav>nav>.divCarrinho img {
@@ -24,7 +24,7 @@ header.nav>nav>.divCarrinho img {
     border: none;
     height: 100%;
     width: 100%;
-    color: rgba(255, 83, 3, 0.256);
+    color: #0c3455;
 }
 
 
@@ -43,13 +43,11 @@ header.nav>nav>.divMinhaConta img {
 
 }
 
-/* início do fomulário de cadastro*/
-/*================================*/
 .titulo {
     /* border: solid 1px black; */
     width: 100%;
     margin-top: 1.5rem;
-    color: rgba(255, 83, 3, 0.863);
+    color: #0c3455;
     text-align: center;
 }
 
@@ -62,63 +60,25 @@ header.nav>nav>.divMinhaConta img {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    color: rgba(255, 83, 3, 0.863);
+    color: #0c3455;
 }
 
 
 input::placeholder {
-    color: rgba(255, 83, 3, 0.863);
+    color: #0c3455;
     font-weight: 800;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-    border: 1px solid rgba(255, 83, 3, 0.158);
+    border: 1px solid #0c3455;
     border-radius: 20px;
     padding: 1.2rem;
     outline: none;
     transition: 0.3s;
 }
 
-
-
-
-.botao {
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    color: rgb(255, 83, 3);
-    margin: 40px 0px;
-    margin-bottom: 100px;
-
-}
-
-.botoes {
-    width: 25%;
-    height: 35px;
-    border: 2px rgb(10, 43, 10);
-    border-radius: 30px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 20px 40px #2426721C;
-    color: rgb(255, 83, 3);
-    background: rgb(234, 192, 172, 0.4);
-
-}
-
-.botoes:hover {
-    background: rgb(234, 192, 172, 0.8);
-    transition: 0.4s;
-}
-
-.botoes:active {
-    background: rgb(255, 83, 3);
-    transition: 0.3s;
-    color: white;
-}
 
 
 @media (max-width: 600px) {
@@ -133,9 +93,6 @@ select:focus {
         margin: 0 auto;
         text-align: center;
     }
-
-
-
 
     .cadastrando {
         display: flex;
@@ -198,9 +155,6 @@ select:focus {
         padding: 0;
     }
 
-
-
-
     .descricao {
         max-width: 90%;
         min-width: 80%;
@@ -224,16 +178,6 @@ select:focus {
         width: 100%;
     }
 
-    .botoes:hover {
-        background: rgb(234, 192, 172, 0.8);
-        transition: 0.4s;
-    }
-
-    .botoes:active {
-        background: rgb(255, 83, 3);
-        transition: 0.3s;
-        color: white;
-    }
 
 
 

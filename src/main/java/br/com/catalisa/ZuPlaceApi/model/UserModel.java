@@ -23,7 +23,6 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String name;
     @Email(message = "Email inválido")
     @NotEmpty(message = "Email não pode ser vazio")
