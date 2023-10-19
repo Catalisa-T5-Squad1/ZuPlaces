@@ -159,10 +159,9 @@ select:focus {
 }
 
 .card-medio-longo {
-    width: 52%;
-    height: 1.6rem;
-    padding: 0.3rem;
-    border: 2px rgb(10, 43, 10);
+    width: 60%;
+    height: 2.5rem;
+    padding: 0.5rem;
     border-radius: 5px;
     margin: 5px;
     display: flex;

@@ -84,6 +84,9 @@ function getSpacesByProximity(maxDistance = 15000) {
                 <a class="open-maps-button-list" href="https://www.google.com/maps/search/?api=1&query=${space.endereco_completo.latitude},${space.endereco_completo.longitude}" target="_blank">Abrir no Google Maps</a>
             </div> `;
 
+           
+            
+
             spaceList.appendChild(spaceDetails);
           });
         })

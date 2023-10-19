@@ -19,8 +19,8 @@ function preencherTabelaUser(users) {
             <th>${user.documento_identificacao}</th>
             <th>${user.tipo_pessoa}</th>
             <td>
-                <button class="btn btn-primary" onclick="editarUser(${user.id})">Editar</button>
-                <button class="btn btn-danger" onclick="excluirUser(${user.id})">Excluir</button>
+                <button id="button-editar" class="btn btn-primary" onclick="editarUser(${user.id})">Editar</button>
+                <button id="button-excluir" class="btn btn-danger" onclick="excluirUser(${user.id})">Excluir</button>
             </td>
         `;
     });

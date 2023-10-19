@@ -142,6 +142,8 @@ input#estado{
     width: 10%;
 }
 
+
+
 select#estados {
     background-color:transparent;
     align-self: center;
@@ -193,29 +195,26 @@ main > div > div.form input {
             margin-bottom: 1rem;
             
         }
-
-        div button{
-        /* background-color: rgb(243, 233, 233); */
-        font-size: 1rem;
-        border: none;
-        align-self: center;
-        color: black;
-        padding: 0.4rem;
-        /* border-radius: 100px;
-        margin-left: 2rem; */
-    
-        }
-
       
-
-        div button:hover {
+        #entrar-login{
+            background-color: #f7f7f7;
+            font-size: 1rem;
+            border: none;
+            align-self: center;
             color: black;
-            font-weight: 500;
-            background-color: rgba(72, 102, 146, 0.404);
-            opacity: 0.7;
+            padding: 0.6rem;
             cursor: pointer;
         }
 
+        
+ 
+  #entrar-login:hover{
+color: black;
+  font-weight: 500;
+  background-color: rgba(72, 102, 146, 0.404);
+  opacity: 0.7;
+  cursor: pointer;
+}
         #output {
             font-weight: bold;
         }

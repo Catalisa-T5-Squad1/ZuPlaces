@@ -5,6 +5,10 @@ html {
   font-size: 16px;
 }
 
+main {
+  margin-bottom: 13rem;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -31,7 +35,7 @@ table {
 }
 
 thead {
-  background-color: orange;
+  background-color: #0c3455;
   color: white;
 }
 
@@ -44,6 +48,24 @@ th {
   border-bottom: 2px solid #ddd;
 }
 
+
+.buttons  {
+  background-color: #f7f7f7;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  align-self: center;
+  color: black;
+  padding: 0.6rem;
+}
+
+.buttons:hover {
+  color: black;
+  font-weight: 500;
+  background-color: rgba(72, 102, 146, 0.404);
+  opacity: 0.7;
+  cursor: pointer;
+}
 
 
 ul#userSuggestions.suggestions {
