@@ -51,7 +51,7 @@ function getSpacesByProximity(maxDistance = 15000) {
               map,
               title: space.nome,
               icon: {
-                url: "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png",
+                url: "https://maps.gstatic.com/mapfiles/ms2/micons/grn-pushpin.png",
               }
             });
 

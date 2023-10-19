@@ -1,7 +1,10 @@
 
 
 
-🖥️ Tecnologias Utilizadas
+# ZupPlaces
+
+
+## 🖥️ Tecnologias Utilizadas
 * `Java 11` - Linguagem de programação
 * `Spring Boot (2.7.15)` - Framework para criação de aplicativos Java
 * `Spring Boot Data JPA` - Facilita o acesso a bancos de dados relacionais.
@@ -18,10 +21,9 @@
 * `CSS` - Linguagem de estilização para dar estilo às páginas.
 * `JavaScript` - Linguagem de programação para interatividade do usuário.
 
+---
 
-
-
-## ⚙️ Como Executar a Aplicação
+# ⚙️ Como Executar a Aplicação BackEnd
 
 1. **Pré-requisitos:**
     - Certifique-se de ter o [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) instalado em seu computador.
@@ -44,16 +46,47 @@
       java Application.java
       ```
 
----
+<br> <br>
 
-### 🚀 Como Executar o Frontend
+## 🚀 Como Executar o Frontend com Live Server no VSCode
 
-1. Abra o arquivo `index.html` no seu navegador web.
+## Passo 1: Instale o Visual Studio Code (VSCode) e a extensão Live Server
 
-Você precisa ir até src/main/resources/
+Certifique-se de ter o Visual Studio Code instalado em seu computador. Você pode baixá-lo em [https://code.visualstudio.com/](https://code.visualstudio.com/). Em seguida, instale a extensão Live Server. Para fazer isso, siga estas etapas:
+
+- 📦 Abra o VSCode.
+- 🛠️ Vá para a aba "Extensões" no menu lateral esquerdo.
+- 🔍 Pesquise por "Live Server" na barra de pesquisa.
+- 📥 Clique em "Instalar" ao lado da extensão oferecida por Ritwick Dey.
+
+## Passo 2: Crie um projeto frontend
+
+Certifique-se de que você já tenha um projeto frontend com um arquivo HTML (como o `index.html`) pronto para ser executado. Se ainda não tiver um, crie um diretório para seu projeto e adicione um arquivo HTML (por exemplo, `index.html`) e outros arquivos (CSS, JavaScript, etc.) conforme necessário.
+
+## Passo 3: Abra o projeto no VSCode
+
+Abra o VSCode e vá para o menu "Arquivo" (File) > "Abrir Pasta" (Open Folder). Selecione a pasta raiz do seu projeto frontend.
+
+## Passo 4: Configure o Live Server
+
+Agora que você está no VSCode com seu projeto aberto, siga estas etapas para configurar o Live Server:
+
+- 📄 Abra o arquivo `index.html` do seu projeto no VSCode.
+- 🖱️ Clique com o botão direito no arquivo `index.html` e escolha "Abrir com o Live Server" no menu de contexto.
+
+## Passo 5: Execute a aplicação
+
+O Live Server abrirá o arquivo `index.html` no seu navegador padrão. Normalmente, ele abrirá em http://127.0.0.1:5500/, que é uma URL local. Como mencionado, essa abordagem ajuda a contornar problemas de Cross-Origin Resource Sharing (CORS) durante o desenvolvimento.
+
+Agora você deverá ver sua aplicação frontend em execução no navegador.
+
+Lembre-se de que, ao usar o Live Server, ele também fornece funcionalidades de recarga automática, o que significa que qualquer alteração feita nos arquivos do seu projeto será refletida automaticamente no navegador sem a necessidade de atualizar manualmente a página. Isso torna o desenvolvimento frontend mais eficiente.
+
+Espero que este guia seja útil para você rodar sua aplicação frontend usando o Live Server no VSCode. Se você encontrar problemas ou mensagens de erro, verifique sua configuração e certifique-se de que tudo foi seguido corretamente.
 
 
-### 📚 Documentação com Swagger
+
+## 📚 Documentação com Swagger
 
 A documentação da API é gerada automaticamente pelo Swagger, facilitando a compreensão e teste das suas rotas. Siga os passos abaixo para acessar a documentação:
 
@@ -68,7 +101,7 @@ Certifique-se de que a aplicação esteja em execução para que o Swagger possa
 ---
 
 
-## 🏢 Banco de Dados em Memória H2
+### 🏢 Banco de Dados em Memória H2
 
 A aplicação utiliza o banco de dados em memória H2 para armazenar os dados. Para acessar o console de administração do H2, siga os passos abaixo:
 
@@ -92,6 +125,51 @@ Lembre-se de que o banco de dados em memória H2 é reiniciado sempre que a apli
 ```
 docker-compose up
 ```
+
+# 🌟 Fluxo de Trabalho com GitHub Actions e GitFlow
+
+Este repositório utiliza o GitHub Actions para automatizar a integração contínua e os testes no projeto, seguindo o fluxo de trabalho com GitFlow. O GitHub Actions é configurado para executar diferentes etapas com base nos eventos de push para determinados ramos do repositório.
+
+## Descrição do Fluxo de Trabalho
+
+### Fluxo de Trabalho "Esteira de Testes"
+
+Este fluxo de trabalho é acionado sempre que ocorre um push para os ramos "feature**" ou "develop".
+
+**Passos:**
+
+1. 🛠️ **Build (Compilação):** Nesta etapa, o código é compilado usando o JDK 11 e o Maven. O comando `mvn clean package -DskipTests=true` é usado para compilar o código, ignorando os testes unitários.
+
+### Fluxo de Trabalho "Execute Testes Unitários"
+
+Este fluxo de trabalho é acionado após a conclusão bem-sucedida do fluxo "Build".
+
+**Passos:**
+
+1. 🧪 **Set up JDK 11 (Configurar o JDK 11):** Configura o ambiente Java JDK 11.
+2. 🧪 **Testes Unitários:** Executa os testes unitários do projeto usando o comando `mvn test`.
+
+### Fluxo de Trabalho "Execute Testes de Integração"
+
+Este fluxo de trabalho é acionado após a conclusão bem-sucedida do fluxo "Execute Testes Unitários".
+
+**Passos:**
+
+1. 🧪 **Set up JDK 11 (Configurar o JDK 11):** Configura o ambiente Java JDK 11.
+2. 🧪 **Testes de Integração:** Executa os testes de integração do projeto usando o comando `mvn verify`.
+
+### Fluxo de Trabalho "Relatório de Cobertura de Código"
+
+Este fluxo de trabalho é acionado após a conclusão bem-sucedida do fluxo "Execute Testes de Integração".
+
+**Passos:**
+
+1. 🧪 **Set up JDK 11 (Configurar o JDK 11):** Configura o ambiente Java JDK 11.
+2. 📊 **Relatório JaCoCo:** Gera um relatório de cobertura de código usando o JaCoCo com o comando `mvn jacoco:report`.
+
+## Executando o Fluxo de Trabalho
+
+Os fluxos de trabalho são executados automaticamente sempre que ocorre um push para os ramos "feature**" ou "develop". Os testes e a cobertura de código são avaliados para garantir a qualidade do código.
 
 ---
 
