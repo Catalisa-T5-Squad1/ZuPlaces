@@ -28,18 +28,18 @@ public class ResourceController {
     @GetMapping
     @Operation(summary = " : Lista todos os recursos cadastrados", method = "GET")
     public ResponseEntity<List<ResourceResponseDto>> findAllResources(){
-        logger.debug("Método findAllResources() chamado");
+        logger.debug("Método findAllResources() chamado, Bateu no Controller");
         List<ResourceResponseDto> resourceResponseDtoList = resourceService.findAll();
-        logger.info("Total de recursos encontrados: {}", resourceResponseDtoList.size());
+        logger.info("Total de recursos encontrados: {}", resourceResponseDtoList.size() + " Bateu no Controller");
         return new ResponseEntity<>(resourceResponseDtoList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = " : Busca um recurso cadastrado por ID", method = "GET")
     public ResponseEntity<ResourceResponseDto> findResourceById(@PathVariable Long id){
-        logger.debug("Método findResourceById() chamado");
+        logger.debug("Método findResourceById() chamado Bateu no Controller");
         ResourceResponseDto responseDto = resourceService.findById(id);
-        logger.info("Recurso com ID: {}", id  + " Encontrado com sucesso!");
+        logger.info("Recurso com ID: {}", id  + " Encontrado com sucesso! Bateu no Controller");
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
@@ -48,7 +48,7 @@ public class ResourceController {
     public ResponseEntity<ResourceResponseDto> registerResource(@RequestBody ResourceRequestDto resourceRequestDto){
         logger.debug("Método registerResource() chamado");
         ResourceResponseDto resourceResponseDto = resourceService.create(resourceRequestDto);
-        logger.info("Recurso {} ,registrado com sucesso: ", resourceResponseDto.getName());
+        logger.info("Recurso {} ,registrado com sucesso: ", resourceResponseDto.getName() + " Bateu no controller");
         return new ResponseEntity<>(resourceResponseDto, HttpStatus.CREATED);
     }
 
@@ -58,16 +58,16 @@ public class ResourceController {
                                                              @RequestBody ResourceRequestDto resourceRequestDto){
         logger.debug("Método alterResource() chamado");
         ResourceResponseDto resourceResponseDto = resourceService.update(id, resourceRequestDto);
-        logger.info("Recurso com ID: {}", id  + " Alterado com sucesso!");
+        logger.info("Recurso com ID: {}", id  + " Alterado com sucesso! Bateu no Controller");
         return new ResponseEntity<>(resourceResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = " : Deleta um recurso cadastrado por ID", method = "DELETE")
     public ResponseEntity<Void> deleteResource(@PathVariable Long id){
-        logger.debug("Método deleteResource() chamado");
+        logger.debug("Método deleteResource() chamado, Bateu no Controller" );
         resourceService.delete(id);
-        logger.info("Recurso com ID: {}", id  + " Deletado com sucesso!");
+        logger.info("Recurso com ID: {}", id  + " Deletado com sucesso!, Bateu no Controller");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
