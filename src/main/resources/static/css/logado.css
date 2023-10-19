@@ -27,3 +27,23 @@ button.redirect-button {
 #color4 {
     background-color: #f7941e;
 }
+
+#color1:hover {
+    background-color: #0c3455;
+    opacity: 0.8;
+}
+
+#color2:hover {
+    background-color: #0e1a33;
+    opacity: 0.8;
+}
+
+#color3:hover {
+    background-color: #ef4123;
+    opacity: 0.8;
+}
+
+#color4:hover {
+    background-color: #f7951e;
+    opacity: 0.8;
+}
