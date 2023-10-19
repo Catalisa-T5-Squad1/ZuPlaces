@@ -63,7 +63,7 @@ public class ResourceControllerTest {
     @Test
     void testFindResourceById() throws Exception {
         Long resourceId = 1L;
-        ResourceResponseDto resourceDto = new ResourceResponseDto("Sample Resource");
+        ResourceResponseDto resourceDto = new ResourceResponseDto(1L,"Sample Resource");
 
         when(resourceService.findById(resourceId)).thenReturn(resourceDto);
 
@@ -83,7 +83,7 @@ public class ResourceControllerTest {
 
         String jsonContent = objectMapper.writeValueAsString(resourceRequestDto);
 
-        ResourceResponseDto responseDto = new ResourceResponseDto("Sample Resource");
+        ResourceResponseDto responseDto = new ResourceResponseDto(1L,"Sample Resource");
         when(resourceService.create(any(ResourceRequestDto.class))).thenReturn(responseDto);
 
         mockMvc.perform(post("/api/resources")
@@ -103,7 +103,7 @@ public class ResourceControllerTest {
 
         String jsonContent = objectMapper.writeValueAsString(updatedResourceDto);
 
-        ResourceResponseDto responseDto = new ResourceResponseDto("Updated Resource");
+        ResourceResponseDto responseDto = new ResourceResponseDto(1L,"Updated Resource");
         when(resourceService.update(any(Long.class), any(ResourceRequestDto.class))).thenReturn(responseDto);
 
         mockMvc.perform(put("/api/resources/{id}", 1L)
