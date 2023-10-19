@@ -52,6 +52,10 @@ public class UserService {
         return repository.findByNameContainingIgnoreCase(nome);
     }
 
+    public UserModel findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
     public UserModel update(Long id, UserResponseDto userResponseDto) {
         UserModel updatedUser  = findById(id);
         if (updatedUser == null){

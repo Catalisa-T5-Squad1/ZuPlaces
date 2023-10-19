@@ -25,90 +25,29 @@
     </nav>
   </header>
   <main>
-    <div class="div.cadastro">
-        <div class="titulo-cadastro titulo">
-            <h1>CADASTRO DE USUÁRIO</h1>
+    <form id="contactForm">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
         </div>
-        <div class="form" >
-            <form id="cadastroUsuarioForm">
-            <div class="dados-pessoais">
-                <div>
-                <h3 class="">Dados de Cadastro:</h3>
-                </div>
-                <div class="alerta-erros-validacao">
-                    <div class="invisible err-nome">*Preencha o nome correto</div>
-                    <div class="invisible err-cpf">*Preencha o cpf errado</div>
-                    <div class="invisible err-data-nascimento">*Preencha a data de nascimento</div>
-                </div>
-                <div>
-                    <label for="nome"></label>
-                    <input type="text" name="nome" id="nome" placeholder="Nome Completo">
-                    <label for="cpf"></label>
-                    <input type="text" name="cpf" id="documento" placeholder="CPF/CNPJ: 000.000.000-00">
-                </div>
-                
-            </div>
-            
-            <div class="dados-contatos">
-                <div>
-                    <h3>Dados de Contato:</h3>
-                </div>
-                <div class="alerta-erros-validacao">
-                    <div class="invisible err-email">*Preencha o e-mail</div>
-                    <div class="invisible err-telefone">*Preencha o celular</div>
-                </div>
-                <div>
-                    <label for="telefone"></label>
-                    <input type="tel" id="telefone" placeholder="(XX) X XXXX-XXXX">
-                </div>
-            </div>
-            <div class="criar-login">
-                <div>
-                    <h3 class="">Criar login</h3>
-                </div>
-                <div class="alerta-erros-validacao">
-                    <div class="invisible err-login">*Preencha o e-mail</div>
-                    
-                </div>
-                
-                <div>
-                    <label for="login"></label>
-                    <input type="email" id="login" placeholder="Digite seu e-mail"> 
-                </div>
-                <div class="alerta-erros-validacao">
-                    <div class="invisible err-senha">*Preencha sua senha</div>
-                    <div class="invisible err-confirmarSenha">*Preencha sua senha</div>
-                </div>
-                
-                <div>
-                    <label for="senha"></label>
-                    <input type="password" id="senhaCadastro" placeholder="Digite sua senha">      
-                    <label for="confirmar-senha"></label>
-                    <input type="password" id="confirmarSenhaCadastro" placeholder="Confirme sua senha">
-                </div>
-            </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
         </div>
-            <button type="submit">Criar Conta</button>
-            </form>          
-    </div>
-    <div>
-        <h2 class="titulo">Usuários Cadastrados</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Documento</th>
-                    <th>Tipo de Pessoa</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="usersTableBody">
-            </tbody>
-        </table>
-    </div>
+        <div>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone">
+        </div>
+        <div>
+            <label for="spaceIndicated">Space Indicated:</label>
+            <input type="text" id="spaceIndicated" name="spaceIndicated">
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4"></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
 </main>
 <footer>
     <div class="div-footer">
@@ -167,6 +106,7 @@
 </footer>
 <p class="copy" >&copy; Copyright 2023, ZuPlace.</p>  
     </body>
+    
     </html>
       <script src="./javascript/cadastro-user.js"></script>
       <script src="./javascript/lista-user.js"></script>

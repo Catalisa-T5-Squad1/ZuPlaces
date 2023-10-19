@@ -1,5 +1,6 @@
 package br.com.catalisa.ZuPlaceApi.controller;
 
+import br.com.catalisa.ZuPlaceApi.dto.LoginRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.UserRequestDto;
 import br.com.catalisa.ZuPlaceApi.dto.UserResponseDto;
 import br.com.catalisa.ZuPlaceApi.model.UserModel;
@@ -64,6 +65,16 @@ public class UserController {
         UserResponseDto userResponseDto = service.create(userRequestDto);
         logger.info("Usuário {} ,registrado com sucesso: ", userResponseDto.getName() + " Bateu no controller.");
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<String> logIn(@RequestBody LoginRequestDto loginRequestDto){
+        UserModel userExistente = service.findByEmail(loginRequestDto.getEmail());
+        if (userExistente != null && userExistente.getPassword().equals(loginRequestDto.getPassword())) {
+            return ResponseEntity.ok("Parabéns, você está logado com sucesso!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas. Verifique seu e-mail e senha.");
+        }
     }
 
     @DeleteMapping(value = ID)

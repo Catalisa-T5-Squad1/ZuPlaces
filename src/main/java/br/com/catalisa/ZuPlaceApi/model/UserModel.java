@@ -35,7 +35,7 @@ public class UserModel {
     private PersonType personType;
 
     private String phone;
-@CpfOrCnpj
+    @CpfOrCnpj
     private String documentType;
 
     @OneToMany(mappedBy = "user")

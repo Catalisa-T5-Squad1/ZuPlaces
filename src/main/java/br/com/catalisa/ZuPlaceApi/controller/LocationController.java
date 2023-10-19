@@ -2,6 +2,7 @@ package br.com.catalisa.ZuPlaceApi.controller;
 
 import br.com.catalisa.ZuPlaceApi.dto.GeoLocationUserResponseDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestProximityLocationDto;
+import br.com.catalisa.ZuPlaceApi.dto.SpaceRequestResourceLocationDto;
 import br.com.catalisa.ZuPlaceApi.dto.SpaceResponseProximityLocationDto;
 import br.com.catalisa.ZuPlaceApi.exception.ExternalRequestFailureException;
 import br.com.catalisa.ZuPlaceApi.service.AddressService;
@@ -45,6 +46,16 @@ public class LocationController {
                 spaceRequestProximityLocationDto.getLatitudeOrigem(),
                 spaceRequestProximityLocationDto.getLongitudeOrigem(),
                 spaceRequestProximityLocationDto.getMaxDistance());
+        System.out.println("Requisição da lista de spaces feita: " + spaceResponseProximityLocationDto);
+        return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
+    }
+
+    @PostMapping(path = "/resource")
+    public ResponseEntity<List<SpaceResponseProximityLocationDto>> findForResource(@RequestBody SpaceRequestResourceLocationDto spaceRequestResourceLocationDto) {
+        List<SpaceResponseProximityLocationDto> spaceResponseProximityLocationDto = locationService.findSpacesByResources(
+                spaceRequestResourceLocationDto.getLatitudeOrigem(),
+                spaceRequestResourceLocationDto.getLongitudeOrigem(),
+                spaceRequestResourceLocationDto.getRecurso());
         System.out.println("Requisição da lista de spaces feita: " + spaceResponseProximityLocationDto);
         return ResponseEntity.status(HttpStatus.OK).body(spaceResponseProximityLocationDto);
     }
