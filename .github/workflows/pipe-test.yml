@@ -1,4 +1,4 @@
-name: Esteira de testes
+name: Esteira de build
 run-name: ${{ github.actor }} is testing out 🚀
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
       - name: Build with Maven
-        run: mvn clean package -DskipTests=true
+        run: mvn clean package

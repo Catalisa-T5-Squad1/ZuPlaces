@@ -47,8 +47,8 @@ public class ContactControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Nome1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Nome2"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].nome").value("Nome1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].nome").value("Nome2"));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ContactControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Nome1"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome1"));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ContactControllerTest {
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Nome1"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome1"));
     }
 
     @Test
@@ -98,7 +98,7 @@ public class ContactControllerTest {
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Nome1"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Nome1"));
     }
 
     @Test

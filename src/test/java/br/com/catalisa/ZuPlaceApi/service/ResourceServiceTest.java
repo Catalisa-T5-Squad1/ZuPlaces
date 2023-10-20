@@ -44,8 +44,8 @@ public class ResourceServiceTest {
 
         when(resourceRepository.findAll()).thenReturn(Arrays.asList(resource1, resource2));
 
-        when(modelMapper.map(resource1, ResourceResponseDto.class)).thenReturn(new ResourceResponseDto("Resource 1"));
-        when(modelMapper.map(resource2, ResourceResponseDto.class)).thenReturn(new ResourceResponseDto("Resource 2"));
+        when(modelMapper.map(resource1, ResourceResponseDto.class)).thenReturn(new ResourceResponseDto(1L, "Resource 1"));
+        when(modelMapper.map(resource2, ResourceResponseDto.class)).thenReturn(new ResourceResponseDto(2L,"Resource 2"));
 
         List<ResourceResponseDto> resourceResponseDtoList = resourceService.findAll();
         assertEquals(2, resourceResponseDtoList.size());
