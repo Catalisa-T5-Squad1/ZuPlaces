@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Usuário é: " + usuarioData);
             alert('Cadastro realizado com sucesso!');
             form.reset();
+            window.location.href = './logado.html';
           } else {
             alert('Ocorreu um erro durante o cadastro. Tente novamente mais tarde.');
           }

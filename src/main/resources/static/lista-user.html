@@ -30,52 +30,26 @@
     <main>
         <div class="div.cadastro">
             <div class="titulo-cadastro titulo">
-                <h1>CADASTRO DE USUÁRIO</h1>
+                <h1>USUÁRIOS CADASTRADOS</h1>
             </div>
             <div class="form">
-                <form id="cadastroUsuarioForm">
-                    <div class="dados-pessoais">
-                        <div>
-                            <h3 class="">Dados de Cadastro:</h3>
-                        </div>
-                        <div>
-                            <label for="nome"></label>
-                            <input type="text" name="nome" id="nome" placeholder="Nome Completo">
-                            <label for="cpf"></label>
-                            <input type="text" name="cpf" id="documento" placeholder="CPF/CNPJ: 000.000.000-00">
-                        </div>
-
-                    </div>
-
-                    <div class="dados-contatos">
-                        <div>
-                            <h3>Dados de Contato:</h3>
-                        </div>
-                        <div>
-                            <label for="telefone"></label>
-                            <input type="tel" id="telefone" placeholder="Telefone: (99) 9 9999-9999">
-                        </div>
-                    </div>
-                    <div class="criar-login">
-                        <div>
-                            <h3 class="">Criar login</h3>
-                        </div>
-
-                        <div>
-                            <label for="login"></label>
-                            <input type="email" id="login" placeholder="Digite seu e-mail">
-                        </div>
-                        <div>
-                            <label for="senha"></label>
-                            <input type="password" id="senhaCadastro" placeholder="Digite sua senha">
-                            <label for="confirmar-senha"></label>
-                            <input type="password" id="confirmarSenhaCadastro" placeholder="Confirme sua senha">
-                        </div>
-                    </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Documento</th>
+                            <th>Tipo de Pessoa</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                    </tbody>
+                </table>
             </div>
-            <button class="buttons" type="submit">Criar Conta</button>
-            </form>
-        </div>
+        
     </main>
     <footer>
         <div class="div-footer">

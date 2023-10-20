@@ -37,7 +37,7 @@ function excluirUser(id) {
             method: 'DELETE'
         })
         .then(response => {
-            if (response.status === 200) {
+            if (response.status === 204) {
                 alert(`Usuário com ID ${id} excluído com sucesso.`);
                 atualizarListaDeUsers();
             } else {
