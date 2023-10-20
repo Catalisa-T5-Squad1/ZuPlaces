@@ -33,7 +33,7 @@ function getSpacesByProximity(maxDistance = 15000) {
             map,
             title: "Minha Localização",
             icon: {
-              url: "https://maps.gstatic.com/mapfiles/ms2/micons/blue-pushpin.png",
+              url: "./images/icon/icon-user.png",
             },
           });
 
@@ -51,7 +51,7 @@ function getSpacesByProximity(maxDistance = 15000) {
               map,
               title: space.nome,
               icon: {
-                url: "https://maps.gstatic.com/mapfiles/ms2/micons/grn-pushpin.png",
+                url: "./images/icon/icon-space.png",
               }
             });
 

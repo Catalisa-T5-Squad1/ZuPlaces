@@ -108,6 +108,27 @@ ul#userSuggestions.suggestions {
   color: #fff;
 }
 
+#distance-slider-container {
+  margin-top: 1.5rem;
+}
+
+.div-legenda-slider {
+  display: flex;
+  gap: 20rem;
+}
+
+.legenda {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  gap: 3rem;
+}
+
+.legenda-icon {
+  display: flex;
+  gap: 0.5rem;
+}
+
 
 
 /* header.aviso-header>h5.frase-motion {

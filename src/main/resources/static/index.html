@@ -42,12 +42,26 @@
         <section>
             <div id="map-container">
                 <div id="gmp-map" style="width: 1800px; height: 700px;"></div>
-                <div id="distance-slider-container">
-                    <label for="slides-distance">Busque pela distância: </label>
-                    <input type="range" id="distance-slider" min="15000" max="100000" step="1000" value="15000"
-                        oninput="updateDistance()">
-                    <output for="distance-slider" id="distance-output">15 km</output>
+                <div class="div-legenda-slider">
+                    <div class="legenda">
+                        <div class="legenda-icon">
+                            <div><img src="./images/icon/icon-user.png" height="30px" alt="icon na cor verde que é a localização do usuário"></div>
+                            <div><p>Posição do usuário</p></div>
+                        </div>
+                        <div class="legenda-icon">
+                            <div><img src="./images/icon/icon-space.png" height="30px" alt="icon na cor laranja que é a localização do espaço"></div>
+                            <div><p>Posição do espaço</p></div>
+                        </div>
+                    </div>
+                    <div id="distance-slider-container">
+                        <label for="slides-distance">Busque pela distância: </label>
+                        <input type="range" id="distance-slider" min="15000" max="100000" step="1000" value="15000"
+                            oninput="updateDistance()">
+                        <output for="distance-slider" id="distance-output">15 km</output>
+                    </div>
+
                 </div>
+               
         </section>
 
         <div class="list-space" aria-label="Lista de Espaços">

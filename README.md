@@ -91,6 +91,14 @@ Lembre-se de que, ao usar o Live Server, ele também fornece funcionalidades de 
 Espero que este guia seja útil para você rodar sua aplicação frontend usando o Live Server no VSCode. Se você encontrar problemas ou mensagens de erro, verifique sua configuração e certifique-se de que tudo foi seguido corretamente.
 
 
+## 🌟 StackSpot para a arquitetura backend
+
+Foi utilizado StackSpot, criamos um plugin para montar a arquitetura inicial do projeto.
+
+stk apply plugin guijanuario/catalisa-t5-squad1/java-spring-boot-zuplacesapi@0.0.1
+
+---
+
 
 ## 📚 Documentação com Swagger
 
